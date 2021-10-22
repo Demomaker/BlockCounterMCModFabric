@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "blockcounter",
+  "version": "${version}",
+
+  "name": "Block Counter",
+  "description": "This is a mod for counting blocks.\n\nUse this command to count :\n/blockcounter countblocks <firstPositionX> <firstPositionY> <firstPositionZ> <secondPositionX> <secondPositionY> <secondPositionZ> [optionalBlockFilter]\n",
+  "authors": [
+    "Demomaker (Mike Bédard)"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/Demomaker/BlockCounterMCMod"
+  },
+
+  "license": "LGPL-2.1",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.demomaker.blockcounter.util.BlockCounter"
+    ]
+  },
+  "mixins": [
+
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
