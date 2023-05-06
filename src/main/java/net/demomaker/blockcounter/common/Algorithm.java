@@ -76,10 +76,13 @@ public class Algorithm {
             item = itemInput.getName().getString();
         }
         Map<String, Integer> localBlockCounts = GetAmountOfBlocks(firstPosition, secondPosition, item);
-        String returnString = "";
+        StringBuilder returnString = new StringBuilder();
         for(String key : localBlockCounts.keySet()) {
-            returnString += key + " : " + localBlockCounts.get(key).toString() + " \n";
+            String localBlockCount = localBlockCounts.get(key).toString();
+            returnString.append(key);
+            returnString.append(" : ");
+            returnString.append(localBlockCount).append(" \n");
         }
-        return returnString;
+        return returnString.toString();
     }
 }
