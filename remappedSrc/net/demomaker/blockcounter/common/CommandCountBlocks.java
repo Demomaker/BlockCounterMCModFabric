@@ -1,8 +1,5 @@
 package net.demomaker.blockcounter.common;
 
-import static net.minecraft.server.command.CommandManager.RegistrationEnvironment;
-import static net.minecraft.server.command.CommandManager.argument;
-
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,9 +12,12 @@ import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.item.Item;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.CommandManager.RegistrationEnvironment;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.text.Text;
+
+import static net.minecraft.server.command.CommandManager.*;
 public class CommandCountBlocks implements Command<ServerCommandSource> {
 
     private static final CommandCountBlocks CMD = new CommandCountBlocks();
@@ -52,10 +52,10 @@ public class CommandCountBlocks implements Command<ServerCommandSource> {
             Item item = itemArgument.getItem();
             ALGORITHM.setServerWorld(context.getSource().getWorld());
             String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, item));
-            context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
+            context.getSource().sendFeedback(Text.of(chatMessage), false);
         }
         catch(Exception e) {
-            context.getSource().sendFeedback(() -> Text.of(e.getMessage()), false);
+            context.getSource().sendFeedback(Text.of(e.toString()), false);
         }
         return 0;
     }

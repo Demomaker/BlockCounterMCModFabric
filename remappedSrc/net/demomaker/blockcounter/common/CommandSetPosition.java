@@ -1,19 +1,27 @@
 package net.demomaker.blockcounter.common;
 
+import static net.minecraft.server.command.CommandManager.argument;
+
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.command.argument.ItemStackArgument;
+import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.CommandManager.RegistrationEnvironment;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 
 public class CommandSetPosition implements Command<ServerCommandSource> {
   private static final CommandSetPosition CMD = new CommandSetPosition();
@@ -45,7 +53,7 @@ public class CommandSetPosition implements Command<ServerCommandSource> {
       chatMessage.append(", y: " + firstPosition.getY());
       chatMessage.append(", z: " + firstPosition.getZ());
       chatMessage.append(")");
-      context.getSource().sendFeedback(() -> Text.of(chatMessage.toString()), false);
+      context.getSource().sendFeedback(Text.of(chatMessage.toString()), false);
       return 0;
     }
     if(secondPosition == null) {
@@ -57,14 +65,14 @@ public class CommandSetPosition implements Command<ServerCommandSource> {
       chatMessage.append(", y: " + secondPosition.getY());
       chatMessage.append(", z: " + secondPosition.getZ());
       chatMessage.append(")");
-      context.getSource().sendFeedback(() -> Text.of(chatMessage.toString()), false);
+      context.getSource().sendFeedback(Text.of(chatMessage.toString()), false);
     }
     ALGORITHM.setServerWorld(context.getSource().getWorld());
     String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, null));
 
     firstPosition = null;
     secondPosition = null;
-    context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
+    context.getSource().sendFeedback(Text.of(chatMessage), false);
     return 0;
   }
 }
