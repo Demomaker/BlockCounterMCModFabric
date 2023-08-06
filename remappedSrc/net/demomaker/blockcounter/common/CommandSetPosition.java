@@ -8,6 +8,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
+import net.demomaker.blockcounter.util.UserMessageSender;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
@@ -46,26 +47,12 @@ public class CommandSetPosition implements Command<ServerCommandSource> {
     int z = MathHelper.floor(playerPosition.getZ());
     if(firstPosition == null) {
       firstPosition = new BlockPos(x, y, z);
-      StringBuilder chatMessage = new StringBuilder();
-      chatMessage.append("Set first position at : ");
-      chatMessage.append("(");
-      chatMessage.append("x: " + firstPosition.getX());
-      chatMessage.append(", y: " + firstPosition.getY());
-      chatMessage.append(", z: " + firstPosition.getZ());
-      chatMessage.append(")");
-      context.getSource().sendFeedback(Text.of(chatMessage.toString()), false);
+      this.secondPosition(firstPosition, 1, context.getSource());
       return 0;
     }
     if(secondPosition == null) {
       secondPosition = new BlockPos(x, y, z);
-      StringBuilder chatMessage = new StringBuilder();
-      chatMessage.append("Set second position at : ");
-      chatMessage.append("(");
-      chatMessage.append("x: " + secondPosition.getX());
-      chatMessage.append(", y: " + secondPosition.getY());
-      chatMessage.append(", z: " + secondPosition.getZ());
-      chatMessage.append(")");
-      context.getSource().sendFeedback(Text.of(chatMessage.toString()), false);
+      this.sendPosition(secondPosition, 2, context.getSource());
     }
     ALGORITHM.setServerWorld(context.getSource().getWorld());
     String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, null));
@@ -74,5 +61,16 @@ public class CommandSetPosition implements Command<ServerCommandSource> {
     secondPosition = null;
     context.getSource().sendFeedback(Text.of(chatMessage), false);
     return 0;
+  }
+
+  private void sendPosition(BlockPos position, byte positionNumber, ServerCommandSource serverCommand) {
+    new UserMessageSender(serverCommand)
+      .setTitle("Set " + positionNumber == 1? "first" : "second" + " position at: ")
+      .append("(")
+      .append("x: " + position.getX())
+      .append(", y: " + position.getY())
+      .append(", z: " + position.getZ())
+      .append(")")
+      .send();
   }
 }
