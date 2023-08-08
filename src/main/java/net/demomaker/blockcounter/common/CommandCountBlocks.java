@@ -1,23 +1,19 @@
 package net.demomaker.blockcounter.common;
 
-import static net.minecraft.server.command.CommandManager.RegistrationEnvironment;
-import static net.minecraft.server.command.CommandManager.argument;
-
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import net.demomaker.blockcounter.util.ResultMessageCreator;
+import net.demomaker.blockcounter.util.UserMessageSender;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
-import net.minecraft.item.Item;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+
+import static net.minecraft.server.command.CommandManager.RegistrationEnvironment;
+import static net.minecraft.server.command.CommandManager.argument;
 public class CommandCountBlocks implements Command<ServerCommandSource> {
 
     private static final CommandCountBlocks CMD = new CommandCountBlocks();
@@ -44,15 +40,14 @@ public class CommandCountBlocks implements Command<ServerCommandSource> {
     }
 
     @Override
-    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    public int run(CommandContext<ServerCommandSource> context) {
         try {
-            BlockPos firstPosition = BlockPosArgumentType.getBlockPos(context, FIRST_POSITION_ARGUMENT_NAME);
-            BlockPos secondPosition = BlockPosArgumentType.getBlockPos(context, SECOND_POSITION_ARGUMENT_NAME);
-            ItemStackArgument itemArgument = ItemStackArgumentType.getItemStackArgument(context, BLOCK_ARGUMENT_NAME);
-            Item item = itemArgument.getItem();
             ALGORITHM.setServerWorld(context.getSource().getWorld());
-            String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, item));
-            context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
+            new BlockCounterUtil(new UserMessageSender(context.getSource()), ALGORITHM)
+                    .setFirstPosition(BlockPosArgumentType.getBlockPos(context, FIRST_POSITION_ARGUMENT_NAME))
+                    .setSecondPosition(BlockPosArgumentType.getBlockPos(context, SECOND_POSITION_ARGUMENT_NAME))
+                    .setFilterItem(ItemStackArgumentType.getItemStackArgument(context, BLOCK_ARGUMENT_NAME).getItem())
+                    .count();
         }
         catch(Exception e) {
             context.getSource().sendFeedback(() -> Text.of(e.getMessage()), false);

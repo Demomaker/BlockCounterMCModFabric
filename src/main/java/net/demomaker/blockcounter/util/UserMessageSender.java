@@ -2,10 +2,9 @@ package net.demomaker.blockcounter.util;
 
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-
 public class UserMessageSender {
-    private ServerCommandSource serverCommand;
-    private StringBuilder message;
+    private final ServerCommandSource serverCommand;
+    private final StringBuilder message;
 
     public UserMessageSender(ServerCommandSource serverCommand) {
         this.serverCommand = serverCommand;
@@ -13,7 +12,7 @@ public class UserMessageSender {
     }
 
     public UserMessageSender setTitle(String title) {
-        this.message.append(title);
+        this.message.append(title, 0, title.length());
         return this;
     }
 
@@ -24,6 +23,6 @@ public class UserMessageSender {
 
     public void send() {
         String finalMessage = this.message.toString();
-        this.serverCommand.sendFeedback(Text.of(finalMessage), false);
+        this.serverCommand.sendFeedback(() -> Text.of(finalMessage), false);
     }
 }

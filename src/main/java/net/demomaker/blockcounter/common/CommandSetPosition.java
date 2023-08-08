@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
+import net.demomaker.blockcounter.util.UserMessageSender;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
@@ -38,33 +39,32 @@ public class CommandSetPosition implements Command<ServerCommandSource> {
     int z = MathHelper.floor(playerPosition.getZ());
     if(firstPosition == null) {
       firstPosition = new BlockPos(x, y, z);
-      StringBuilder chatMessage = new StringBuilder();
-      chatMessage.append("Set first position at : ");
-      chatMessage.append("(");
-      chatMessage.append("x: " + firstPosition.getX());
-      chatMessage.append(", y: " + firstPosition.getY());
-      chatMessage.append(", z: " + firstPosition.getZ());
-      chatMessage.append(")");
-      context.getSource().sendFeedback(() -> Text.of(chatMessage.toString()), false);
+      this.sendPosition(firstPosition, true, context.getSource());
       return 0;
     }
     if(secondPosition == null) {
       secondPosition = new BlockPos(x, y, z);
-      StringBuilder chatMessage = new StringBuilder();
-      chatMessage.append("Set second position at : ");
-      chatMessage.append("(");
-      chatMessage.append("x: " + secondPosition.getX());
-      chatMessage.append(", y: " + secondPosition.getY());
-      chatMessage.append(", z: " + secondPosition.getZ());
-      chatMessage.append(")");
-      context.getSource().sendFeedback(() -> Text.of(chatMessage.toString()), false);
+      this.sendPosition(secondPosition, false, context.getSource());
     }
-    ALGORITHM.setServerWorld(context.getSource().getWorld());
-    String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, null));
 
+    sendCountResult(context.getSource());
     firstPosition = null;
     secondPosition = null;
-    context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
     return 0;
+  }
+
+  private void sendPosition(BlockPos position, boolean firstOne, ServerCommandSource serverCommand) {
+    new UserMessageSender(serverCommand)
+      .setTitle(String.format("Set %s position at: ", firstOne ? "first": "second"))
+      .append(String.format("(x: %d, y: %d, z: %d)", position.getX(), position.getY(), position.getZ()))
+      .send();
+  }
+
+  private void sendCountResult(ServerCommandSource serverCommand) {
+      ALGORITHM.setServerWorld(serverCommand.getWorld());
+      new BlockCounterUtil(new UserMessageSender(serverCommand), ALGORITHM)
+              .setFirstPosition(firstPosition)
+              .setSecondPosition(secondPosition)
+              .count();
   }
 }
