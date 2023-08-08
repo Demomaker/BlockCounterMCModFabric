@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.demomaker.blockcounter.util.BlockCounter"
+      "net.demomaker.blockcounter.main.BlockCounter"
     ]
   },
   "mixins": [
