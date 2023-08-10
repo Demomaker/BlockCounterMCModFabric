@@ -62,12 +62,15 @@ public class CommandSetPosition extends BasicCommand {
       int y = MathHelper.floor(playerPosition.getY());
       int z = MathHelper.floor(playerPosition.getZ());
 
+      BlockPos positionToDisplay = null;
       if (firstPosition == null) {
         firstPosition = new BlockPos(x, y, z);
+        positionToDisplay = firstPosition;
         setFirstPosition(currentPlayerConfig, firstPosition);
       }
       else if (secondPosition == null) {
         secondPosition = new BlockPos(x, y, z);
+        positionToDisplay = secondPosition;
         setSecondPosition(currentPlayerConfig, secondPosition);
       }
 
@@ -76,9 +79,9 @@ public class CommandSetPosition extends BasicCommand {
           + positionWord
           + " position at : "
           + "("
-          + "x: " + firstPosition.getX()
-          + ", y: " + firstPosition.getY()
-          + ", z: " + firstPosition.getZ()
+          + "x: " + positionToDisplay.getX()
+          + ", y: " + positionToDisplay.getY()
+          + ", z: " + positionToDisplay.getZ()
           + ")";
       context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
 
