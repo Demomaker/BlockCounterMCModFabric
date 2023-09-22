@@ -1,12 +1,12 @@
 package net.demomaker.blockcounter.util;
 
+import net.demomaker.blockcounter.blockentity.BlockEntries;
+
 public class ResultMessageCreator {
-  public static String createMessage(String counts) {
-    StringBuilder chatMessage = new StringBuilder();
-    chatMessage.append("===================\n");
-    chatMessage.append("Number Of Blocks : \n");
-    chatMessage.append(counts);
-    chatMessage.append("===================");
-    return chatMessage.toString();
+  public static String createMessage(BlockEntries blockEntries) {
+    return "===================\n"
+        + "Number Of Blocks : \n"
+        + blockEntries.toString()
+        + "===================";
   }
 }
