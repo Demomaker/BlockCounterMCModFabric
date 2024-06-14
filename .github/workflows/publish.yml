@@ -107,7 +107,7 @@ jobs:
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}  # Ensure this secret is added to your GitHub repository
       run: |
-        curl -X POST https://api.modrinth.com/v2/project/blockcountermod/version \
+        curl -X POST https://api.modrinth.com/v2/project/blockcounter/version \
         -H "Authorization: Bearer $MODRINTH_TOKEN" \
         -H "Content-Type: multipart/form-data" \
         -F "data=@modrinth_data.json;type=application/json" \
