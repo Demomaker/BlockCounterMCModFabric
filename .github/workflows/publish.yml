@@ -74,15 +74,15 @@ jobs:
     - name: Prepare JSON data
       id: prepare_json
       run: |
-        jq -n --arg name "$MOD_NAME $VERSION" \
-              --arg version_number "$VERSION" \
+        jq -n --arg name "$mod_name $version" \
+              --arg version_number "$version" \
               --argjson dependencies '[]' \
-              --argjson game_versions '["'$GAME_VERSION'"]' \
+              --argjson game_versions '["'$game_version'"]' \
               --arg version_type "release" \
               --argjson loaders '["fabric"]' \
               --arg featured "true" \
-              --arg file_parts "./build/libs/${MOD_NAME}-${VERSION}.jar" \
-              --arg changelog "Release $VERSION" \
+              --arg file_parts "./build/libs/${mod_name}-${version}.jar" \
+              --arg changelog "Release $version" \
               --arg release_channel "stable" \
               '{
                 name: $name,
@@ -106,7 +106,10 @@ jobs:
     - name: Publish to Modrinth
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}  # Ensure this secret is added to your GitHub repository
+        VERSION: ${{ env.version }}
+        MOD_NAME: ${{ env.mod_name }}
       run: |
+        echo "Publishing ${MOD_NAME}-${VERSION}.jar"
         curl -X POST https://api.modrinth.com/v2/project/blockcounter/version \
         -H "Authorization: Bearer $MODRINTH_TOKEN" \
         -H "Content-Type: multipart/form-data" \
