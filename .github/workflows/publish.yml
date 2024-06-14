@@ -70,12 +70,14 @@ jobs:
         version=$(jq -r '.version' src/main/resources/fabric.mod.json)
         echo "mod_name=$mod_name" >> $GITHUB_ENV
         echo "version=$version" >> $GITHUB_ENV
+        echo "VERSION=$version" >> $GITHUB_ENV  # Set VERSION variable explicitly
 
-    - name: Debug environment variables
+    - name: Debug environment variables and files
       run: |
-        echo "game_version: ${{ env.game_version }}"
-        echo "mod_name: ${{ env.mod_name }}"
-        echo "version: ${{ env.version }}"
+        echo "MOD_NAME: ${{ env.mod_name }}"
+        echo "VERSION: ${{ env.version }}"
+        ls -l ./build/libs/
+        cat modrinth_data.json
 
     - name: Prepare JSON data
       id: prepare_json
