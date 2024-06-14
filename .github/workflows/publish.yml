@@ -123,4 +123,5 @@ jobs:
         curl -X POST https://api.modrinth.com/v2/project/blockcounter/version \
         -H "Authorization: Bearer $MODRINTH_TOKEN" \
         -H "Content-Type: multipart/form-data" \
-        -F "data=@modrinth_data.json;type=
+        -F "data=@modrinth_data.json;type=application/json" \
+        -F "file=@./build/libs/${MOD_NAME}-${VERSION}.jar"
