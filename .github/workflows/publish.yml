@@ -64,13 +64,21 @@ jobs:
         echo "game_version=$game_version" >> $GITHUB_ENV
         version=$(grep 'mod_version = ' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
         echo "version=$version" >> $GITHUB_ENV  # Set VERSION variable explicitly
-        mod_name=$(grep 'archives_base_name = ' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
-        echo "mod_name=$mod_name" >> $GITHUB_ENV  # Set MOD_NAME variable explicitly
+        archives_base_name=$(grep 'archives_base_name = ' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+        echo "archives_base_name=$archives_base_name" >> $GITHUB_ENV  # Set MOD_NAME variable explicitly
+
+    - name: Read fabric.mod.json and set VERSION
+      id: read_fabric_mod_json
+      run: |
+        mod_name=$(jq -r '.name' src/main/resources/fabric.mod.json)
+        echo "mod_name=$mod_name" >> $GITHUB_ENV
 
     - name: Debug environment variables and files
       run: |
         echo "MOD_NAME: ${{ env.mod_name }}"
+        echo "ARCHIVES_BASE_NAME: ${{ env.archives_base_name }}"
         echo "VERSION: ${{ env.version }}"
+        echo "GAME_VERSION: ${{ env.game_version }}"
         ls -l ./build/libs/
 
     - name: Prepare JSON data
@@ -79,15 +87,16 @@ jobs:
         MOD_NAME: ${{ env.mod_name }}
         VERSION: ${{ env.version }}
         GAME_VERSION: ${{ env.game_version }}
+        ARCHIVES_BASE_NAME: ${{ env.archives_base_name }}
       run: |
-        jq -n --arg name "$MOD_NAME $VERSION" \
+        jq -n --arg name "$MOD_NAME Mod $VERSION" \
               --arg version_number "$VERSION" \
               --argjson dependencies '[]' \
               --argjson game_versions '["'$GAME_VERSION'"]' \
               --arg version_type "release" \
               --argjson loaders '["fabric"]' \
               --arg featured "true" \
-              --arg file_parts "./build/libs/${MOD_NAME}-${VERSION}.jar" \
+              --arg file_parts "./build/libs/$ARCHIVES_BASE_NAME-$VERSION.jar" \
               --arg changelog "Release $VERSION" \
               --arg release_channel "stable" \
               '{
@@ -112,12 +121,13 @@ jobs:
     - name: Publish to Modrinth
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}  # Ensure this secret is added to your GitHub repository
+        ARCHIVES_BASE_NAME: ${{ env.archives_base_name }}
         MOD_NAME: ${{ env.mod_name }}
         VERSION: ${{ env.version }}
       run: |
-        echo "Publishing ${MOD_NAME}-${VERSION}.jar"
+        echo "Publishing $ARCHIVES_BASE_NAME-$VERSION.jar"
         curl -X POST https://api.modrinth.com/v2/project/blockcounter/version \
         -H "Authorization: Bearer $MODRINTH_TOKEN" \
         -H "Content-Type: multipart/form-data" \
         -F "data=@modrinth_data.json;type=application/json" \
-        -F "file=@./build/libs/${MOD_NAME}-${VERSION}.jar"
+        -F "file=@./build/libs/$ARCHIVES_BASE_NAME-$VERSION.jar"
