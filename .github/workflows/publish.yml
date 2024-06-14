@@ -64,12 +64,8 @@ jobs:
         echo "game_version=$game_version" >> $GITHUB_ENV
         version=$(grep 'mod_version = ' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
         echo "version=$version" >> $GITHUB_ENV  # Set VERSION variable explicitly
-
-    - name: Read fabric.mod.json
-      id: read_fabric_mod_json
-      run: |
-        mod_name=$(jq -r '.name' src/main/resources/fabric.mod.json)
-        echo "mod_name=$mod_name" >> $GITHUB_ENV
+        mod_name=$(grep 'archives_base_name = ' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+        echo "mod_name=$mod_name" >> $GITHUB_ENV  # Set MOD_NAME variable explicitly
 
     - name: Debug environment variables and files
       run: |
