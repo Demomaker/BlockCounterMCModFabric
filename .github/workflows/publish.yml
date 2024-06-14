@@ -97,6 +97,12 @@ jobs:
                 release_channel: $release_channel
               }' > modrinth_data.json
 
+    - name: Check modrinth_data.json
+      run: cat modrinth_data.json
+
+    - name: Check built jar files
+      run: ls -l ./build/libs/
+
     - name: Publish to Modrinth
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}  # Ensure this secret is added to your GitHub repository
