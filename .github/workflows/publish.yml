@@ -57,19 +57,19 @@ jobs:
         name: build-artifacts
         path: ./build/libs/
 
-    - name: Read gradle.properties
+    - name: Read gradle.properties and set VERSION
       id: read_properties
       run: |
         game_version=$(grep 'minecraft_version=' gradle.properties | cut -d'=' -f2)
         echo "game_version=$game_version" >> $GITHUB_ENV
+        version=$(grep 'mod_version=' gradle.properties | cut -d'=' -f2)
+        echo "version=$version" >> $GITHUB_ENV  # Set VERSION variable explicitly
 
-    - name: Read fabric.mod.json and set VERSION
+    - name: Read fabric.mod.json
       id: read_fabric_mod_json
       run: |
         mod_name=$(jq -r '.name' src/main/resources/fabric.mod.json)
-        version=$(jq -r '.version' src/main/resources/fabric.mod.json)
         echo "mod_name=$mod_name" >> $GITHUB_ENV
-        echo "version=$version" >> $GITHUB_ENV  # Set VERSION variable explicitly
 
     - name: Debug environment variables and files
       run: |
