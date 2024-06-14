@@ -71,18 +71,28 @@ jobs:
         echo "mod_name=$mod_name" >> $GITHUB_ENV
         echo "version=$version" >> $GITHUB_ENV
 
+    - name: Debug environment variables
+      run: |
+        echo "game_version: ${{ env.game_version }}"
+        echo "mod_name: ${{ env.mod_name }}"
+        echo "version: ${{ env.version }}"
+
     - name: Prepare JSON data
       id: prepare_json
+      env:
+        MOD_NAME: ${{ env.mod_name }}
+        VERSION: ${{ env.version }}
+        GAME_VERSION: ${{ env.game_version }}
       run: |
-        jq -n --arg name "$mod_name $version" \
-              --arg version_number "$version" \
+        jq -n --arg name "$MOD_NAME $VERSION" \
+              --arg version_number "$VERSION" \
               --argjson dependencies '[]' \
-              --argjson game_versions '["'$game_version'"]' \
+              --argjson game_versions '["'$GAME_VERSION'"]' \
               --arg version_type "release" \
               --argjson loaders '["fabric"]' \
               --arg featured "true" \
-              --arg file_parts "./build/libs/${mod_name}-${version}.jar" \
-              --arg changelog "Release $version" \
+              --arg file_parts "./build/libs/${MOD_NAME}-${VERSION}.jar" \
+              --arg changelog "Release $VERSION" \
               --arg release_channel "stable" \
               '{
                 name: $name,
@@ -106,8 +116,8 @@ jobs:
     - name: Publish to Modrinth
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}  # Ensure this secret is added to your GitHub repository
-        VERSION: ${{ env.version }}
         MOD_NAME: ${{ env.mod_name }}
+        VERSION: ${{ env.version }}
       run: |
         echo "Publishing ${MOD_NAME}-${VERSION}.jar"
         curl -X POST https://api.modrinth.com/v2/project/blockcounter/version \
