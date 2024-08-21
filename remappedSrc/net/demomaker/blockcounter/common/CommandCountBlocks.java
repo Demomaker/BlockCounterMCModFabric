@@ -52,10 +52,10 @@ public class CommandCountBlocks implements Command<ServerCommandSource> {
             Item item = itemArgument.getItem();
             ALGORITHM.setServerWorld(context.getSource().getWorld());
             String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, item));
-            context.getSource().sendFeedback(Text.of(chatMessage), false);
+            FeedbackSender.send(context, chatMessage);
         }
         catch(Exception e) {
-            context.getSource().sendFeedback(Text.of(e.toString()), false);
+            FeedbackSender.send(context, e.getMessage());
         }
         return 0;
     }

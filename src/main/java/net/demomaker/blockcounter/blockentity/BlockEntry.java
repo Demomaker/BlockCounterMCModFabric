@@ -13,4 +13,8 @@ public class BlockEntry {
   public String toString() {
     return itemName.getString() + nameAndCountSeparator + blockCount.toString();
   }
+
+  public BlockCount getBlockCount() {
+    return blockCount;
+  }
 }

@@ -8,6 +8,7 @@ import net.demomaker.blockcounter.blockentity.BlockCount;
 import net.demomaker.blockcounter.blockentity.BlockEntries;
 import net.demomaker.blockcounter.blockentity.BlockEntry;
 import net.demomaker.blockcounter.blockentity.ItemName;
+import net.demomaker.blockcounter.command.config.CommandConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
@@ -20,10 +21,14 @@ public class Algorithm {
     public void setServerWorld(ServerWorld serverWorld) {
         this.serverWorld = serverWorld;
     }
-    public ServerWorld getServerWorld() { return this.serverWorld; }
 
     public void stop() {
         this.stopAlgorithm = true;
+    }
+
+    public BlockEntries execute(CommandConfig commandConfig) throws Exception {
+        this.setServerWorld(commandConfig.serverWorld);
+        return this.GetBlockEntriesByCount(commandConfig.firstPosition, commandConfig.secondPosition, commandConfig.itemFilter);
     }
 
     public void start() {

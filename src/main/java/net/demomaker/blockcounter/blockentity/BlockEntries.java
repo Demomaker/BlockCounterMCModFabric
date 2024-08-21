@@ -19,4 +19,13 @@ public class BlockEntries {
     return stringBuilder.toString();
   }
 
+  public Integer calculateTotal() {
+    int total = 0;
+    for (BlockEntry blockEntry :
+    blockEntries) {
+      total += blockEntry.getBlockCount().getValue();
+    }
+    return total;
+  }
+
 }

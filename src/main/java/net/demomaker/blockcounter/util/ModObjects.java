@@ -1,7 +1,7 @@
 package net.demomaker.blockcounter.util;
 
-import net.demomaker.blockcounter.player.PlayerConfigs;
+import net.demomaker.blockcounter.config.CommandExecutionConfigs;
 
 public class ModObjects {
-  public static PlayerConfigs playerConfigs = new PlayerConfigs();
+  public static CommandExecutionConfigs commandExecutionConfigs = new CommandExecutionConfigs();
 }

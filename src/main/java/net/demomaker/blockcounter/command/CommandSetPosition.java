@@ -7,17 +7,19 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 import net.demomaker.blockcounter.command.config.SetPositionCommandConfig;
+import net.demomaker.blockcounter.config.CommandExecutionConfig;
+import net.demomaker.blockcounter.config.CommandExecutionConfigResolver;
+import net.demomaker.blockcounter.entity.EntityResolver;
 import net.demomaker.blockcounter.main.BlockCounter;
-import net.demomaker.blockcounter.player.PlayerConfig;
+import net.demomaker.blockcounter.util.FeedbackSender;
 import net.demomaker.blockcounter.util.ModObjects;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -46,29 +48,28 @@ public class CommandSetPosition extends BasicCommand {
 
   public int countBlocks(CommandContext<ServerCommandSource> context, Item item) {
     try {
-
-      ServerPlayerEntity player = getPlayerFromContext(context);
-      PlayerConfig currentPlayerConfig = getPlayerConfigFromContext(context);
-      SetPositionCommandConfig setPositionCommandConfig = currentPlayerConfig.getCommandConfigs()
+      CommandExecutionConfig currentCommandExecutionConfig = CommandExecutionConfigResolver.getConfigFromContext(context);
+      SetPositionCommandConfig setPositionCommandConfig = currentCommandExecutionConfig.getCommandConfigs()
           .getSetPositionCommandConfig();
       setPositionCommandConfig.serverWorld = getServerWorldFromContext(context);
       setPositionCommandConfig.itemFilter = item;
 
-      BlockPos firstPosition = currentPlayerConfig.getCommandConfigs().getSetPositionCommandConfig().firstPosition;
-      BlockPos secondPosition = currentPlayerConfig.getCommandConfigs().getSetPositionCommandConfig().secondPosition;
+      BlockPos firstPosition = currentCommandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig().firstPosition;
+      BlockPos secondPosition = currentCommandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig().secondPosition;
+      ItemStack bookAndQuil = EntityResolver.getBookAndQuillFromContext(context);
 
-      Vec3d playerPosition = player.getPos();
-      int x = MathHelper.floor(playerPosition.getX());
-      int y = MathHelper.floor(playerPosition.getY());
-      int z = MathHelper.floor(playerPosition.getZ());
+      Vec3d entityPosition = getPositionOfEntityFromContext(context);
+      int x = MathHelper.floor(entityPosition.getX());
+      int y = MathHelper.floor(entityPosition.getY());
+      int z = MathHelper.floor(entityPosition.getZ());
 
       if (firstPosition == null) {
         firstPosition = new BlockPos(x, y, z);
-        setFirstPosition(currentPlayerConfig, firstPosition);
+        setFirstPosition(currentCommandExecutionConfig, firstPosition, bookAndQuil);
       }
       else if (secondPosition == null) {
         secondPosition = new BlockPos(x, y, z);
-        setSecondPosition(currentPlayerConfig, secondPosition);
+        setSecondPosition(currentCommandExecutionConfig, secondPosition, bookAndQuil);
       }
 
       String positionWord = (secondPosition == null) ? "first" : "second";
@@ -80,34 +81,34 @@ public class CommandSetPosition extends BasicCommand {
           + ", y: " + y
           + ", z: " + z
           + ")";
-      context.getSource().sendFeedback(() -> Text.of(chatMessage), false);
+      FeedbackSender.send(context, chatMessage);
 
       if(secondPosition != null) {
-        int result = super.countBlocks(context, currentPlayerConfig.getCommandConfigs()
+        int result = super.countBlocks(context, currentCommandExecutionConfig.getCommandConfigs()
             .getSetPositionCommandConfig());
-        setFirstPosition(currentPlayerConfig, null);
-        setSecondPosition(currentPlayerConfig, null);;
+        setFirstPosition(currentCommandExecutionConfig, null, null);
+        setSecondPosition(currentCommandExecutionConfig, null, null);;
         return result;
       }
     }
     catch(Exception e) {
-      context.getSource().sendFeedback(() -> Text.of(e.getMessage()), false);
+      FeedbackSender.send(context, e.getMessage());
       return e.hashCode();
     }
     return 0;
   }
 
-  protected void setFirstPosition(PlayerConfig playerConfig, BlockPos position) {
-    SetPositionCommandConfig currentSetPositionCommandConfig = playerConfig.getCommandConfigs().getSetPositionCommandConfig();
+  protected void setFirstPosition(CommandExecutionConfig commandExecutionConfig, BlockPos position, ItemStack bookAndQuil) {
+    SetPositionCommandConfig currentSetPositionCommandConfig = commandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig();
     currentSetPositionCommandConfig.firstPosition = position;
-    playerConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig));
-    ModObjects.playerConfigs.setPlayerConfig(playerConfig);
+    currentSetPositionCommandConfig.writableBook = bookAndQuil;
+    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig)));
   }
 
-  protected void setSecondPosition(PlayerConfig playerConfig, BlockPos position) {
-    SetPositionCommandConfig currentSetPositionCommandConfig = playerConfig.getCommandConfigs().getSetPositionCommandConfig();
+  protected void setSecondPosition(CommandExecutionConfig commandExecutionConfig, BlockPos position, ItemStack bookAndQuil) {
+    SetPositionCommandConfig currentSetPositionCommandConfig = commandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig();
     currentSetPositionCommandConfig.secondPosition = position;
-    playerConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig));
-    ModObjects.playerConfigs.setPlayerConfig(playerConfig);
+    currentSetPositionCommandConfig.writableBook = bookAndQuil;
+    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig)));
   }
 }

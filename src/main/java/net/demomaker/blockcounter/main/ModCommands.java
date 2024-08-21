@@ -8,7 +8,7 @@ import net.demomaker.blockcounter.command.CommandSetPosition;
 import net.demomaker.blockcounter.command.CommandSetPositionWithoutItemArgument;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 import net.demomaker.blockcounter.command.config.SetPositionCommandConfig;
-import net.demomaker.blockcounter.player.PlayerConfig;
+import net.demomaker.blockcounter.config.PlayerConfig;
 import net.demomaker.blockcounter.util.ModObjects;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.command.CommandRegistryAccess;
@@ -29,13 +29,13 @@ public class ModCommands {
 
     public static void disconnect(ServerPlayNetworkHandler handler, MinecraftServer server) {
         PlayerConfig wantedPlayerConfig = new PlayerConfig(handler.getPlayer().getGameProfile(), null, null);
-        ModObjects.playerConfigs.getPlayerConfig(wantedPlayerConfig).stopAlgorithm();
-        ModObjects.playerConfigs.removePlayerConfig(wantedPlayerConfig);
+        ModObjects.commandExecutionConfigs.getConfig(wantedPlayerConfig).getAlgorithm().stop();
+        ModObjects.commandExecutionConfigs.removeConfig(wantedPlayerConfig);
     }
 
     public static void join(ServerPlayNetworkHandler serverPlayNetworkHandler,
         PacketSender packetSender, MinecraftServer minecraftServer) {
-        PlayerConfig newPlayerConfig = new PlayerConfig(serverPlayNetworkHandler.getPlayer().getGameProfile(), new Algorithm(), new CommandConfigs(new SetPositionCommandConfig(null, null, null, null)));
-        ModObjects.playerConfigs.addPlayerConfig(newPlayerConfig);
+        PlayerConfig newPlayerConfig = new PlayerConfig(serverPlayNetworkHandler.getPlayer().getGameProfile(), new Algorithm(), new CommandConfigs(new SetPositionCommandConfig(null, null, null, null, null)));
+        ModObjects.commandExecutionConfigs.addConfig(newPlayerConfig);
     }
 }

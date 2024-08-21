@@ -19,7 +19,7 @@ public class CommandCountBlocksWithoutItemArgument implements Command<ServerComm
         BlockPos secondPosition = BlockPosArgumentType.getBlockPos(context, CommandCountBlocks.SECOND_POSITION_ARGUMENT_NAME);
         ALGORITHM.setServerWorld(context.getSource().getWorld());
         String chatMessage = ResultMessageCreator.createMessage(ALGORITHM.GetStringContainingAllBlockCountsFor(firstPosition, secondPosition, null));
-        context.getSource().sendFeedback(Text.of(chatMessage), false);
+        FeedbackSender.send(context, chatMessage);
         return 0;
     }
 }

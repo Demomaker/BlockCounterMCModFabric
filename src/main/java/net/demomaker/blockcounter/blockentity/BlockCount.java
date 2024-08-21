@@ -13,4 +13,6 @@ public class BlockCount {
   public String toString() {
     return count.toString();
   }
+
+  public Integer getValue() { return count; }
 }

@@ -1,13 +1,11 @@
-package net.demomaker.blockcounter.player;
+package net.demomaker.blockcounter.config;
 
 import com.mojang.authlib.GameProfile;
 import java.util.UUID;
 import net.demomaker.blockcounter.algorithm.Algorithm;
-import net.demomaker.blockcounter.blockentity.BlockEntries;
-import net.demomaker.blockcounter.command.config.CommandConfig;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 
-public class PlayerConfig {
+public class PlayerConfig implements CommandExecutionConfig {
   private GameProfile gameProfile;
   private Algorithm algorithm;
   private CommandConfigs commandConfigs;
@@ -17,7 +15,7 @@ public class PlayerConfig {
     this.commandConfigs = commandConfigs;
   }
 
-  public String getId() {
+  public String getIdentifier() {
     UUID id = gameProfile.getId();
     if(id != null) {
       return id.toString();
@@ -25,21 +23,14 @@ public class PlayerConfig {
     return gameProfile.getName();
   }
 
-  public BlockEntries executeAlgorithm(CommandConfig commandConfig) throws Exception {
-    algorithm.setServerWorld(commandConfig.serverWorld);
-    return algorithm.GetBlockEntriesByCount(commandConfig.firstPosition, commandConfig.secondPosition, commandConfig.itemFilter);
-  }
-
-  public void stopAlgorithm() {
-    algorithm.stop();
-  }
+  public Algorithm getAlgorithm() { return algorithm; }
 
   public CommandConfigs getCommandConfigs() {
     return commandConfigs;
   }
 
-  public void setCommandConfigs(CommandConfigs commandConfigs) {
-    this.commandConfigs = commandConfigs;
+  public CommandExecutionConfig setCommandConfigs(CommandConfigs newCommandConfigs) {
+    return new PlayerConfig(gameProfile, algorithm, newCommandConfigs);
   }
 }
 

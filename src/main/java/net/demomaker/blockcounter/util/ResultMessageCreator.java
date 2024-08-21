@@ -7,6 +7,8 @@ public class ResultMessageCreator {
     return "===================\n"
         + "Number Of Blocks : \n"
         + blockEntries.toString()
+        + "-------------------\n"
+        + "Total : " + blockEntries.calculateTotal().toString() + "\n"
         + "===================";
   }
 }
