@@ -1,9 +1,9 @@
 package net.demomaker.blockcounter.command.config;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.demomaker.blockcounter.facade.Item;
+import net.demomaker.blockcounter.facade.ItemStack;
+import net.demomaker.blockcounter.facade.BlockPos;
+import net.demomaker.blockcounter.facade.ServerWorld;
 
 public class CommandConfig {
   public BlockPos firstPosition;

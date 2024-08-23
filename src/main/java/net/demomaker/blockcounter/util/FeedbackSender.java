@@ -1,12 +1,11 @@
 package net.demomaker.blockcounter.util;
 
-import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
+import net.demomaker.blockcounter.facade.ServerCommandContext;
+import net.demomaker.blockcounter.facade.ServerCommandSource;
 
 public class FeedbackSender {
-  public static void send(CommandContext<ServerCommandSource> context, String message) {
-    context.getSource().sendFeedback(() -> Text.of(message), false);
+  public static void send(ServerCommandContext<ServerCommandSource> context, String message) {
+    context.getSource().sendFeedback(message, false);
   }
 
 }

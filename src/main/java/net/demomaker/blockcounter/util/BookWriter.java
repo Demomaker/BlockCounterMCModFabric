@@ -1,13 +1,13 @@
 package net.demomaker.blockcounter.util;
 
-import com.mojang.brigadier.context.CommandContext;
+import net.demomaker.blockcounter.facade.ServerCommandContext;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.WritableBookContentComponent;
-import net.minecraft.item.ItemStack;
+import net.demomaker.blockcounter.facade.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.server.command.ServerCommandSource;
+import net.demomaker.blockcounter.facade.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.RawFilteredPair;
 import net.minecraft.util.Hand;
@@ -61,20 +61,21 @@ public class BookWriter {
     return result;
   }
 
-  public static void detectPlayersWithBookAndQuillAndWrite(CommandContext<ServerCommandSource> context, String message) {
+  public static void detectPlayersWithBookAndQuillAndWrite(
+      ServerCommandContext<ServerCommandSource> context, String message) {
     for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
       if (isHoldingBookAndQuill(player, Hand.MAIN_HAND)) {
-        Write(player.getMainHandStack(), message);
+        Write(new ItemStack(player.getMainHandStack()), message);
       }
 
       if (isHoldingBookAndQuill(player, Hand.OFF_HAND)) {
-        Write(player.getOffHandStack(), message);
+        Write(new ItemStack(player.getOffHandStack()), message);
       }
     }
   }
 
   private static boolean isHoldingBookAndQuill(ServerPlayerEntity player, Hand hand) {
-    ItemStack itemStack = player.getStackInHand(hand);
+    ItemStack itemStack = new ItemStack(player.getStackInHand(hand));
     return itemStack.getItem() == Items.WRITABLE_BOOK;
   }
 }

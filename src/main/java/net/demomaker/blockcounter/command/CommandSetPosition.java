@@ -2,32 +2,32 @@ package net.demomaker.blockcounter.command;
 
 import static net.minecraft.server.command.CommandManager.argument;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 import net.demomaker.blockcounter.command.config.SetPositionCommandConfig;
 import net.demomaker.blockcounter.config.CommandExecutionConfig;
 import net.demomaker.blockcounter.config.CommandExecutionConfigResolver;
 import net.demomaker.blockcounter.entity.EntityResolver;
+import net.demomaker.blockcounter.facade.ServerCommand;
+import net.demomaker.blockcounter.facade.ServerCommandContext;
 import net.demomaker.blockcounter.main.BlockCounter;
 import net.demomaker.blockcounter.util.FeedbackSender;
 import net.demomaker.blockcounter.util.ModObjects;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.demomaker.blockcounter.facade.Item;
+import net.demomaker.blockcounter.facade.ItemStack;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.math.BlockPos;
+import net.demomaker.blockcounter.facade.ServerCommandSource;
+import net.demomaker.blockcounter.facade.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.demomaker.blockcounter.facade.Vec3d;
 
 public class CommandSetPosition extends BasicCommand {
   public static final String COMMAND_NAME = "setposition";
   public static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.server.command.ServerCommandSource> getServerCommandFormat(
-      CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, Command<ServerCommandSource> CountBlocksCommand, Command<ServerCommandSource> CountBlocksWithoutItemArgumentCommand) {
+      CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, ServerCommand CountBlocksCommand, ServerCommand CountBlocksWithoutItemArgumentCommand) {
     return CommandManager.literal(BlockCounter.MOD_ID).then(
         dispatcher.register(CommandManager.literal(CommandSetPosition.COMMAND_NAME)
             .requires(cs -> cs.hasPermissionLevel(0))
@@ -40,13 +40,13 @@ public class CommandSetPosition extends BasicCommand {
   }
 
     @Override
-  public int run(CommandContext<ServerCommandSource> context) {
+  public int run(ServerCommandContext context) {
     ItemStackArgument itemArgument = ItemStackArgumentType.getItemStackArgument(context, BLOCK_ARGUMENT_NAME);
-    Item item = itemArgument.getItem();
+    Item item = new Item(itemArgument.getItem());
     return countBlocks(context, item);
   }
 
-  public int countBlocks(CommandContext<ServerCommandSource> context, Item item) {
+  public int countBlocks(ServerCommandContext context, Item item) {
     try {
       CommandExecutionConfig currentCommandExecutionConfig = CommandExecutionConfigResolver.getConfigFromContext(context);
       SetPositionCommandConfig setPositionCommandConfig = currentCommandExecutionConfig.getCommandConfigs()

@@ -9,10 +9,10 @@ import net.demomaker.blockcounter.blockentity.BlockEntries;
 import net.demomaker.blockcounter.blockentity.BlockEntry;
 import net.demomaker.blockcounter.blockentity.ItemName;
 import net.demomaker.blockcounter.command.config.CommandConfig;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.demomaker.blockcounter.facade.ServerWorld;
+import net.demomaker.blockcounter.facade.Block;
+import net.demomaker.blockcounter.facade.Item;
+import net.demomaker.blockcounter.facade.BlockPos;
 
 
 public class Algorithm {
@@ -64,7 +64,7 @@ public class Algorithm {
                     if(this.stopAlgorithm) {
                         return blockCounts;
                     }
-                    Block currentBlock = serverWorld.getBlockState(new BlockPos(x, y, z)).getBlock();
+                    Block currentBlock = new Block(serverWorld.getBlockState(new BlockPos(x, y, z)).getBlock());
                     ItemName currentItemName = new ItemName(currentBlock.asItem().getName().getString());
                     if((itemName.equals("") || currentItemName.equals(itemName)))
                     {

@@ -1,66 +1,65 @@
 package net.demomaker.blockcounter.entity;
 
-import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.CommandBlockBlockEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.vehicle.CommandBlockMinecartEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.demomaker.blockcounter.facade.BlockEntity;
+import net.demomaker.blockcounter.facade.BlockPos;
+import net.demomaker.blockcounter.facade.CommandBlockBlockEntity;
+import net.demomaker.blockcounter.facade.CommandBlockMinecartEntity;
+import net.demomaker.blockcounter.facade.Entity;
+import net.demomaker.blockcounter.facade.ItemStack;
+import net.demomaker.blockcounter.facade.ServerCommandContext;
+import net.demomaker.blockcounter.facade.ServerPlayerEntity;
+import net.demomaker.blockcounter.facade.ServerWorld;
+import net.demomaker.blockcounter.facade.Vec3d;
+
 
 public class EntityResolver {
-  public static BlockEntity getCommandSourceBlockEntity(CommandContext<ServerCommandSource> context) {
-    Vec3d position = context.getSource().getPosition();
-    if (position == null)
-      return null;
-    World world = context.getSource().getWorld();
-    return world.getBlockEntity(BlockPos.ofFloored(position));
+  public static BlockEntity getCommandSourceBlockEntity(ServerCommandContext context) {
+    Vec3d position = new Vec3d(context.getSource().getPosition());
+    if (position.isNull())
+      return new BlockEntity();
+    ServerWorld world = new ServerWorld(context.getSource().getWorld());
+    return new BlockEntity(world.getBlockEntity(BlockPos.ofFloored(position)));
   }
 
-  public static ServerPlayerEntity getPlayerFromContext(CommandContext<ServerCommandSource> context) {
-    return context.getSource().getPlayer();
+  public static ServerPlayerEntity getPlayerFromContext(ServerCommandContext context) {
+    return new ServerPlayerEntity(context.getSource().getPlayer());
   }
 
-  public static CommandBlockBlockEntity getCommandBlockFromContext(CommandContext<ServerCommandSource> context) {
+  public static CommandBlockBlockEntity getCommandBlockFromContext(ServerCommandContext context) {
     BlockEntity blockEntity = getCommandSourceBlockEntity(context);
 
-    if(blockEntity == null) {
-      return null;
+    if(blockEntity.isNull()) {
+      return new CommandBlockBlockEntity();
     }
 
-    if (blockEntity instanceof CommandBlockBlockEntity) {
-      return (CommandBlockBlockEntity) blockEntity;
+    if (blockEntity.isInstanceOfCommandBlockBlockEntity()) {
+      return CommandBlockBlockEntity.from(blockEntity);
+    }
+    return new CommandBlockBlockEntity();
+  }
+
+  public static CommandBlockMinecartEntity getCommandBlockMinecartFromContext(ServerCommandContext context) {
+    Entity entity = new Entity(context.getSource().getEntity());
+    if (entity.isNull()) {
+      return null;
+    }
+    if (entity.isInstanceOfCommandBlockMinecartEntity()) {
+      return CommandBlockMinecartEntity.from(entity);
     }
     return null;
   }
 
-  public static CommandBlockMinecartEntity getCommandBlockMinecartFromContext(CommandContext<ServerCommandSource> context) {
-    Entity entity = context.getSource().getEntity();
-    if (entity == null) {
-      return null;
-    }
-    if (entity instanceof CommandBlockMinecartEntity) {
-      return (CommandBlockMinecartEntity) entity;
-    }
-    return null;
-  }
-
-  public static ItemStack getBookAndQuillFromContext(CommandContext<ServerCommandSource> context) {
+  public static ItemStack getBookAndQuillFromContext(ServerCommandContext context) {
     ServerPlayerEntity playerEntity = getPlayerFromContext(context);
-    if (playerEntity == null) {
+    if (playerEntity.isNull()) {
       return null;
     }
     ItemStack mainHandStack = playerEntity.getMainHandStack();
     ItemStack offHandStack = playerEntity.getOffHandStack();
-    if(mainHandStack.getItem() == Items.WRITABLE_BOOK) {
+    if(mainHandStack.getItem().isWritableBook()) {
       return mainHandStack;
     }
-    if(offHandStack.getItem() == Items.WRITABLE_BOOK) {
+    if(offHandStack.getItem().isWritableBook()) {
       return offHandStack;
     }
     return null;

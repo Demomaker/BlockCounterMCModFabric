@@ -2,8 +2,8 @@ package net.demomaker.blockcounter.command;
 
 import static net.demomaker.blockcounter.util.BookWriter.detectPlayersWithBookAndQuillAndWrite;
 
-import com.mojang.brigadier.Command;
-import com.mojang.brigadier.context.CommandContext;
+import net.demomaker.blockcounter.facade.ServerCommand;
+import net.demomaker.blockcounter.facade.ServerCommandContext;
 import net.demomaker.blockcounter.command.config.CommandConfig;
 import net.demomaker.blockcounter.config.CommandBlockConfig;
 import net.demomaker.blockcounter.config.CommandExecutionConfig;
@@ -13,40 +13,44 @@ import net.demomaker.blockcounter.entity.EntityResolver;
 import net.demomaker.blockcounter.util.BookWriter;
 import net.demomaker.blockcounter.util.FeedbackSender;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
-import net.minecraft.block.entity.CommandBlockBlockEntity;
-import net.minecraft.entity.vehicle.CommandBlockMinecartEntity;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Vec3d;
+import net.demomaker.blockcounter.facade.CommandBlockBlockEntity;
+import net.demomaker.blockcounter.facade.CommandBlockMinecartEntity;
+import net.demomaker.blockcounter.facade.ServerCommandSource;
+import net.demomaker.blockcounter.facade.ServerPlayerEntity;
+import net.demomaker.blockcounter.facade.ServerWorld;
+import net.demomaker.blockcounter.facade.Vec3d;
 
-public class BasicCommand implements Command<ServerCommandSource> {
+public class BasicCommand extends ServerCommand<ServerCommandSource> {
   public static final String FIRST_POSITION_ARGUMENT_NAME = "first_position";
   public static final String SECOND_POSITION_ARGUMENT_NAME = "second_position";
   public static final String BLOCK_ARGUMENT_NAME = "block_name";
 
-  protected Vec3d getPositionOfEntityFromContext(CommandContext<ServerCommandSource> context) {
+  public BasicCommand(ServerCommand<ServerCommandSource> command) {
+    super(command);
+  }
+
+  protected Vec3d getPositionOfEntityFromContext(ServerCommandContext context) {
     ServerPlayerEntity playerEntity = EntityResolver.getPlayerFromContext(context);
-    if(playerEntity != null) {
+    if(!playerEntity.isNull()) {
       return playerEntity.getPos();
     }
-    CommandBlockBlockEntity commandBlockBlockEntity = EntityResolver.getCommandBlockFromContext(context);
-    if(commandBlockBlockEntity != null) {
+    CommandBlockBlockEntity commandBlockBlockEntity = new CommandBlockBlockEntity(EntityResolver.getCommandBlockFromContext(context));
+    if(!commandBlockBlockEntity.isNull()) {
       return commandBlockBlockEntity.getPos().toCenterPos();
     }
-    CommandBlockMinecartEntity commandBlockMinecartEntity = EntityResolver.getCommandBlockMinecartFromContext(context);
-    if(commandBlockMinecartEntity != null) {
+    CommandBlockMinecartEntity commandBlockMinecartEntity = new CommandBlockMinecartEntity(EntityResolver.getCommandBlockMinecartFromContext(context));
+    if(!commandBlockMinecartEntity.isNull()) {
       return commandBlockMinecartEntity.getPos();
     }
 
     return Vec3d.ZERO;
   }
 
-  protected ServerWorld getServerWorldFromContext(CommandContext<ServerCommandSource> context) {
-    return context.getSource().getWorld();
+  protected ServerWorld getServerWorldFromContext(ServerCommandContext context) {
+    return new ServerWorld(context.getSource().getWorld());
   }
 
-  public int countBlocks(CommandContext<ServerCommandSource> context, CommandConfig commandConfig) {
+  public int countBlocks(ServerCommandContext context, CommandConfig commandConfig) {
     try {
       CommandExecutionConfig currentCommandExecutionConfig = CommandExecutionConfigResolver.getConfigFromContext(context);
       String chatMessage = ResultMessageCreator.createMessage(currentCommandExecutionConfig.getAlgorithm().execute(commandConfig));
@@ -65,7 +69,7 @@ public class BasicCommand implements Command<ServerCommandSource> {
   }
 
   @Override
-  public int run(CommandContext<ServerCommandSource> commandContext) {
+  public int run(ServerCommandContext commandContext) {
     return 0;
   }
 }
