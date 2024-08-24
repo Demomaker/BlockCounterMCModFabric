@@ -39,8 +39,7 @@ public class CommandDefinition {
       ServerCommandRegistryAccess serverCommandRegistryAccess) {
     CommandArgument<ItemStackArgumentType> commandArgument = new CommandArgument<>();
     commandArgument.name = name;
-    commandArgument.type = ItemStackArgumentType.itemStack(
-        serverCommandRegistryAccess.commandRegistryAccess());
+    commandArgument.type = ItemStackArgumentType.itemStack(serverCommandRegistryAccess.getCommandRegistryAccess());
     commandArgument.serverCommand = serverCommand;
     commandArguments.add(commandArgument);
     return this;
@@ -54,17 +53,23 @@ public class CommandDefinition {
       CommandDispatcher<ServerCommandSource> commandDispatcher) {
     LiteralArgumentBuilder<ServerCommandSource> literalCommand = CommandManager.literal(name).requires(cs -> cs.hasPermissionLevel(0));
     if(serverCommand != null) {
-      literalCommand.executes(serverCommand.getCommand());
+      literalCommand.requires(cs -> cs.hasPermissionLevel(0)).executes(serverCommand.getCommand());
     }
 
     if(commandArguments.size() != 0) {
-      for (var commandArgument : commandArguments) {
-        ArgumentBuilder<ServerCommandSource, ?> argumentBuilder = argument(commandArgument.name, (ArgumentType<?>) commandArgument.type);
+      ArgumentBuilder<ServerCommandSource, ?> argumentBuilder = argument(commandArguments.getLast().name, (ArgumentType<?>) commandArguments.getLast().type);
+      for (int i = commandArguments.size() - 2; i >= 0; i--) {
+        var commandArgument = commandArguments.get(i);
+        ArgumentBuilder<ServerCommandSource, ?> subArgumentBuilder = argument(commandArgument.name, (ArgumentType<?>) commandArgument.type);
         if(commandArgument.serverCommand != null) {
-          argumentBuilder.executes(commandArgument.serverCommand.getCommand());
+          subArgumentBuilder.requires(cs -> cs.hasPermissionLevel(0)).executes(commandArgument.serverCommand.getCommand());
         }
-        literalCommand.then(argumentBuilder);
+
+        subArgumentBuilder.then(argumentBuilder);
+        argumentBuilder = subArgumentBuilder;
       }
+
+      literalCommand.then(argumentBuilder);
     }
 
     return commandDispatcher.register(literalCommand);

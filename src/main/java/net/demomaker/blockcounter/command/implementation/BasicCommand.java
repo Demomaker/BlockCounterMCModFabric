@@ -60,7 +60,7 @@ public class BasicCommand extends ServerCommand {
         detectPlayersWithBookAndQuillAndWrite(context, fullPageMessage);
       }
 
-      if(currentCommandExecutionConfig.getCommandConfigs().getSourceType().equals(SourceType.COMMAND_BLOCK)) {
+      if(currentCommandExecutionConfig.getCommandConfigs().getSourceType() == SourceType.COMMAND_BLOCK) {
         context.sendFeedback(oneLinerMessage, false);
       }
       else {

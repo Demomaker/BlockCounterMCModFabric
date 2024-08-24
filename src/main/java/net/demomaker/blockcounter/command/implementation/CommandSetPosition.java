@@ -86,13 +86,17 @@ public class CommandSetPosition extends BasicCommand {
     SetPositionCommandConfig currentSetPositionCommandConfig = commandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig();
     currentSetPositionCommandConfig.firstPosition = position;
     currentSetPositionCommandConfig.writableBook = bookAndQuil;
-    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig)));
+    CommandConfigs newCommandConfigs = new CommandConfigs(currentSetPositionCommandConfig);
+    newCommandConfigs.setSourceType(commandExecutionConfig.getCommandConfigs().getSourceType());
+    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(newCommandConfigs));
   }
 
   protected void setSecondPosition(CommandExecutionConfig commandExecutionConfig, BlockPos position, ItemStack bookAndQuil) {
     SetPositionCommandConfig currentSetPositionCommandConfig = commandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig();
     currentSetPositionCommandConfig.secondPosition = position;
     currentSetPositionCommandConfig.writableBook = bookAndQuil;
-    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(new CommandConfigs(currentSetPositionCommandConfig)));
+    CommandConfigs newCommandConfigs = new CommandConfigs(currentSetPositionCommandConfig);
+    newCommandConfigs.setSourceType(commandExecutionConfig.getCommandConfigs().getSourceType());
+    ModObjects.commandExecutionConfigs.setConfig(commandExecutionConfig.setCommandConfigs(newCommandConfigs));
   }
 }

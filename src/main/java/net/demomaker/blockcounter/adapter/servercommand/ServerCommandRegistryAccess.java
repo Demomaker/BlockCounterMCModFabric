@@ -4,4 +4,7 @@ import net.minecraft.command.CommandRegistryAccess;
 
 public record ServerCommandRegistryAccess(CommandRegistryAccess commandRegistryAccess) {
 
+  public CommandRegistryAccess getCommandRegistryAccess() {
+    return this.commandRegistryAccess;
+  }
 }
