@@ -9,10 +9,10 @@ import net.demomaker.blockcounter.blockentity.BlockEntries;
 import net.demomaker.blockcounter.blockentity.BlockEntry;
 import net.demomaker.blockcounter.blockentity.ItemName;
 import net.demomaker.blockcounter.command.config.CommandConfig;
-import net.demomaker.blockcounter.facade.ServerWorld;
-import net.demomaker.blockcounter.facade.Block;
-import net.demomaker.blockcounter.facade.Item;
-import net.demomaker.blockcounter.facade.BlockPos;
+import net.demomaker.blockcounter.adapter.world.ServerWorld;
+import net.demomaker.blockcounter.adapter.block.Block;
+import net.demomaker.blockcounter.adapter.item.Item;
+import net.demomaker.blockcounter.adapter.block.BlockPos;
 
 
 public class Algorithm {

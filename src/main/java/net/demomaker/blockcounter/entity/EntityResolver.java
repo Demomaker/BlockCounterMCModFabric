@@ -1,15 +1,15 @@
 package net.demomaker.blockcounter.entity;
 
-import net.demomaker.blockcounter.facade.BlockEntity;
-import net.demomaker.blockcounter.facade.BlockPos;
-import net.demomaker.blockcounter.facade.CommandBlockBlockEntity;
-import net.demomaker.blockcounter.facade.CommandBlockMinecartEntity;
-import net.demomaker.blockcounter.facade.Entity;
-import net.demomaker.blockcounter.facade.ItemStack;
-import net.demomaker.blockcounter.facade.ServerCommandContext;
-import net.demomaker.blockcounter.facade.ServerPlayerEntity;
-import net.demomaker.blockcounter.facade.ServerWorld;
-import net.demomaker.blockcounter.facade.Vec3d;
+import net.demomaker.blockcounter.adapter.entity.BlockEntity;
+import net.demomaker.blockcounter.adapter.block.BlockPos;
+import net.demomaker.blockcounter.adapter.entity.CommandBlockBlockEntity;
+import net.demomaker.blockcounter.adapter.entity.CommandBlockMinecartEntity;
+import net.demomaker.blockcounter.adapter.entity.Entity;
+import net.demomaker.blockcounter.adapter.item.ItemStack;
+import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
+import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
+import net.demomaker.blockcounter.adapter.world.ServerWorld;
+import net.demomaker.blockcounter.adapter.math.Vec3d;
 
 
 public class EntityResolver {
@@ -41,12 +41,12 @@ public class EntityResolver {
   public static CommandBlockMinecartEntity getCommandBlockMinecartFromContext(ServerCommandContext context) {
     Entity entity = new Entity(context.getSource().getEntity());
     if (entity.isNull()) {
-      return null;
+      return new CommandBlockMinecartEntity();
     }
     if (entity.isInstanceOfCommandBlockMinecartEntity()) {
       return CommandBlockMinecartEntity.from(entity);
     }
-    return null;
+    return new CommandBlockMinecartEntity();
   }
 
   public static ItemStack getBookAndQuillFromContext(ServerCommandContext context) {

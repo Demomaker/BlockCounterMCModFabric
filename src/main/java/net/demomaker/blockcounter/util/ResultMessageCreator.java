@@ -11,4 +11,8 @@ public class ResultMessageCreator {
         + "Total : " + blockEntries.calculateTotal().toString() + "\n"
         + "===================";
   }
+
+  public static String createOneLiner(BlockEntries blockEntries) {
+    return "||Number Of Blocks : " + blockEntries.toOneLinerString() + "|Total : " + blockEntries.calculateTotal().toString() + "||";
+  }
 }
