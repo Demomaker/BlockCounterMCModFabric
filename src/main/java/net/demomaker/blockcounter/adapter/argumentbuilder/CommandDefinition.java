@@ -58,6 +58,9 @@ public class CommandDefinition {
 
     if(commandArguments.size() != 0) {
       ArgumentBuilder<ServerCommandSource, ?> argumentBuilder = argument(commandArguments.getLast().name, (ArgumentType<?>) commandArguments.getLast().type);
+      if(commandArguments.getLast().serverCommand != null) {
+        argumentBuilder.requires(cs -> cs.hasPermissionLevel(0)).executes(commandArguments.getLast().serverCommand.getCommand());
+      }
       for (int i = commandArguments.size() - 2; i >= 0; i--) {
         var commandArgument = commandArguments.get(i);
         ArgumentBuilder<ServerCommandSource, ?> subArgumentBuilder = argument(commandArgument.name, (ArgumentType<?>) commandArgument.type);

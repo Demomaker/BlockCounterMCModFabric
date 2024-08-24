@@ -2,7 +2,7 @@ package net.demomaker.blockcounter.command.config;
 
 public class CommandConfigs {
 
-  private SetPositionCommandConfig setPositionCommandConfig;
+  private final SetPositionCommandConfig setPositionCommandConfig;
   private SourceType sourceType = SourceType.PLAYER;
 
   public CommandConfigs(SetPositionCommandConfig setPositionCommandConfig) {
@@ -18,6 +18,6 @@ public class CommandConfigs {
   }
 
   public void setSourceType(SourceType value) {
-    this.sourceType = sourceType;
+    this.sourceType = value;
   }
 }
