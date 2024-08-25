@@ -84,10 +84,10 @@ public class CommandSetPosition extends BasicCommand {
         setSecondPosition(currentCommandExecutionConfig, secondPosition, bookAndQuil);
       }
 
-      String positionWord = (secondPosition == null) ? "first" : "second";
-      String chatMessage = "Set "
-          + positionWord
-          + " position at : "
+      String positionWord = (secondPosition == null) ? TranslationText.commandArgumentFirstPosition.getString() : TranslationText.commandArgumentSecondPosition.getString();
+      String chatMessage =
+          positionWord
+          + " : "
           + "("
           + "x: " + additionalPosition.getX()
           + ", y: " + additionalPosition.getY()
