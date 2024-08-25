@@ -11,7 +11,7 @@ public class BlockEntry {
 
   @Override
   public String toString() {
-    return itemName.getString() + nameAndCountSeparator + blockCount.toString();
+    return itemName.getString() + nameAndCountSeparator + getBlockCount().toString();
   }
 
   public BlockCount getBlockCount() {

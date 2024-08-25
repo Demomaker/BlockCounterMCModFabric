@@ -45,4 +45,15 @@ public class BlockPos {
   public net.minecraft.util.math.BlockPos getBlockPos() {
     return blockPos;
   }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if(o.getClass() == this.getClass()) {
+      BlockPos other = (BlockPos) o;
+      return (other.blockPos == null && this.blockPos == null) || (other.blockPos != null && other.blockPos.equals(this.blockPos));
+    } else {
+      return false;
+    }
+  }
 }
