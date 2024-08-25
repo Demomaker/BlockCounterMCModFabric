@@ -5,15 +5,12 @@ import java.util.List;
 import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
 import net.demomaker.blockcounter.adapter.item.ItemStack;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.WritableBookContentComponent;
-import net.minecraft.text.RawFilteredPair;
-
+import net.minecraft.text.Text;
 public class BookWriter {
   public static final int MAX_PAGE_LENGTH = 200;
-  private static int getIndexOfFirstEmptyPage(List<RawFilteredPair<String>> pages) {
+  private static int getIndexOfFirstEmptyPage(List<Text> pages) {
     for (int i = 0; i < pages.size(); i++) {
-      if(pages.get(i).raw().isEmpty()) {
+      if(pages.get(i).getString().isEmpty()) {
         return i;
       }
     }
@@ -25,21 +22,17 @@ public class BookWriter {
       return false;
     }
 
-    var writableBookContent = book.getBookContent(DataComponentTypes.WRITABLE_BOOK_CONTENT);
-    if (writableBookContent == null) {
-      return false;
-    }
+    List<Text> pages = book.getBookContent();
 
-    List<RawFilteredPair<String>> pages = writableBookContent.pages();
     int indexOfFirstEmptyPage = getIndexOfFirstEmptyPage(pages);
-    List<RawFilteredPair<String>> newPages = new ArrayList<>(pages.subList(0, indexOfFirstEmptyPage));
+    List<Text> newPages = new ArrayList<>(pages.subList(0, indexOfFirstEmptyPage));
     for (String page : splitString(message, MAX_PAGE_LENGTH)) {
-      newPages.add(RawFilteredPair.of(page));
+      newPages.add(Text.of(page));
     }
     if(indexOfFirstEmptyPage < pages.size()) {
       newPages.addAll(pages.subList(indexOfFirstEmptyPage + 1, pages.size()));
     }
-    book.setBookContent(DataComponentTypes.WRITABLE_BOOK_CONTENT, new WritableBookContentComponent(newPages));
+    book.setBookContent(newPages);
     return true;
   }
 
