@@ -15,17 +15,30 @@ import net.demomaker.blockcounter.identity.CommandExecutionConfigResolver;
 import net.demomaker.blockcounter.entity.EntityResolver;
 import net.demomaker.blockcounter.util.ModObjects;
 import net.demomaker.blockcounter.adapter.math.MathHelper;
+import net.demomaker.blockcounter.util.TranslationText;
 
 public class CommandSetPosition extends BasicCommand {
   public static final String COMMAND_NAME = "setposition";
-  public static ServerCommandArgumentBuilder getServerCommandFormat(ServerCommandRegistryAccess registryAccess, ServerCommand CountBlocksCommand, ServerCommand CountBlocksWithoutItemArgumentCommand) {
+  public static ServerCommandArgumentBuilder getDefaultServerCommandFormat(ServerCommandRegistryAccess registryAccess, ServerCommand CountBlocksCommand, ServerCommand CountBlocksWithoutItemArgumentCommand) {
     return new ServerCommandArgumentBuilder()
         .beginCommand(CommandSetPosition.COMMAND_NAME, CountBlocksWithoutItemArgumentCommand)
         .addItemStackArgument(CommandSetPosition.BLOCK_ARGUMENT_NAME, CountBlocksCommand, registryAccess)
         .endCommand();
   }
 
-    @Override
+  public static ServerCommandArgumentBuilder getTranslatedServerCommandFormat(
+      ServerCommandRegistryAccess registryAccess,
+      CommandSetPosition CountBlocksCommand,
+      CommandSetPositionWithoutItemArgument CountBlocksWithoutItemArgumentCommand) {
+    TranslationText.TRANSLATED_TO_DEFAULT_MAP.put(TranslationText.commandSetPosition.getString(), COMMAND_NAME);
+
+    return new ServerCommandArgumentBuilder()
+        .beginCommand(TranslationText.commandSetPosition.getString(), CountBlocksWithoutItemArgumentCommand)
+        .addItemStackArgument(TranslationText.commandArgumentBlockName.getString(), CountBlocksCommand, registryAccess)
+        .endCommand();
+  }
+
+  @Override
   public int run(ServerCommandContext context) {
     return countBlocks(context, new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem()), null);
   }

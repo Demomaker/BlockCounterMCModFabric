@@ -12,8 +12,10 @@ import net.demomaker.blockcounter.command.implementation.CommandCountBlocks;
 import net.demomaker.blockcounter.command.implementation.CommandCountBlocksWithoutItemArgument;
 import net.demomaker.blockcounter.command.implementation.CommandSetPosition;
 import net.demomaker.blockcounter.command.implementation.CommandSetPositionWithoutItemArgument;
+import net.demomaker.blockcounter.command.implementation.HelpCommand;
 import net.demomaker.blockcounter.identity.PlayerConfig;
 import net.demomaker.blockcounter.util.ModObjects;
+import net.demomaker.blockcounter.util.TranslationText;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.command.CommandRegistryAccess;
@@ -30,14 +32,28 @@ import net.minecraft.world.World;
 
 public class ModCommands {
     private static long lastExecutionTime = 0;
-    private static final long COOLDOWN_PERIOD = 1000; // 5 seconds
+    private static boolean blockAlreadyAttacked = false;
+    private static final long COOLDOWN_PERIOD = 800; // 0.8 second
     public static final CommandCountBlocks COMMAND_COUNT_BLOCKS = new CommandCountBlocks();
     public static final CommandCountBlocksWithoutItemArgument COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT = new CommandCountBlocksWithoutItemArgument();
     public static final CommandSetPosition COMMAND_SET_POSITION = new CommandSetPosition();
     public static final CommandSetPositionWithoutItemArgument COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT = new CommandSetPositionWithoutItemArgument();
+    public static final HelpCommand HELP_COMMAND = new HelpCommand();
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, RegistrationEnvironment ignoredEnvironment) {
-        dispatcher.register(CommandCountBlocks.getServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
-        dispatcher.register(CommandSetPosition.getServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        dispatcher.register(CommandCountBlocks.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        dispatcher.register(CommandSetPosition.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        dispatcher.register(HelpCommand.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+
+
+        if(!TranslationText.commandCountBlocks.getString().equals(CommandCountBlocks.COMMAND_NAME)) {
+            dispatcher.register(CommandCountBlocks.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        }
+        if(!TranslationText.commandSetPosition.getString().equals(CommandSetPosition.COMMAND_NAME)) {
+            dispatcher.register(CommandSetPosition.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        }
+        if(!TranslationText.commandHelp.getString().equals(HelpCommand.COMMAND_NAME)) {
+            dispatcher.register(HelpCommand.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        }
     }
 
     public static void disconnect(ServerPlayNetworkHandler handler, MinecraftServer ignoredServer) {
@@ -54,10 +70,12 @@ public class ModCommands {
     public static ActionResult blockLeftClick(PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction direction) {
         long currentTime = System.currentTimeMillis();
 
-        if (world.isClient && hand == Hand.MAIN_HAND && currentTime - lastExecutionTime >= COOLDOWN_PERIOD) {
+        if (world.isClient && hand == Hand.MAIN_HAND && currentTime - lastExecutionTime >= COOLDOWN_PERIOD && !blockAlreadyAttacked) {
+            blockAlreadyAttacked = true;
             lastExecutionTime = currentTime;
 
             CommandSetPositionWithoutItemArgument.executeFrom((ClientPlayerEntity) playerEntity, new net.demomaker.blockcounter.adapter.block.BlockPos(blockPos));
+            blockAlreadyAttacked = false;
         }
 
         return ServerPlayerEntity.getFrom(ModObjects.minecraftServer, playerEntity.getUuid()).isHoldingBook() ? ActionResult.SUCCESS : ActionResult.PASS;

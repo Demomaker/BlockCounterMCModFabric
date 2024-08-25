@@ -4,6 +4,7 @@ import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -40,6 +41,15 @@ public class CommandDefinition {
     CommandArgument<ItemStackArgumentType> commandArgument = new CommandArgument<>();
     commandArgument.name = name;
     commandArgument.type = ItemStackArgumentType.itemStack(serverCommandRegistryAccess.getCommandRegistryAccess());
+    commandArgument.serverCommand = serverCommand;
+    commandArguments.add(commandArgument);
+    return this;
+  }
+
+  public CommandDefinition addStringArgument(String name, ServerCommand serverCommand) {
+    CommandArgument<StringArgumentType> commandArgument = new CommandArgument<>();
+    commandArgument.name = name;
+    commandArgument.type = StringArgumentType.string();
     commandArgument.serverCommand = serverCommand;
     commandArguments.add(commandArgument);
     return this;

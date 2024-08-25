@@ -3,8 +3,8 @@
   "id": "blockcounter",
   "version": "${version}",
 
-  "name": "Block Counter",
-  "description": "This is a mod for counting blocks.\n\nUse this command to count :\n/blockcounter countblocks <firstPositionX> <firstPositionY> <firstPositionZ> <secondPositionX> <secondPositionY> <secondPositionZ> [optionalBlockFilter]\n",
+  "name": "blockcounter.title",
+  "description": "blockcounter.description",
   "authors": [
     "Demomaker (Mike Bédard)"
   ],

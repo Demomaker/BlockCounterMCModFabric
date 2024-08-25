@@ -9,16 +9,31 @@ import net.demomaker.blockcounter.adapter.servercommand.ServerCommandRegistryAcc
 import net.demomaker.blockcounter.adapter.argumentbuilder.ServerCommandArgumentBuilder;
 import net.demomaker.blockcounter.command.config.CommandConfig;
 import net.demomaker.blockcounter.entity.EntityResolver;
+import net.demomaker.blockcounter.util.TranslationText;
 
 public class CommandCountBlocks extends BasicCommand {
     public static final String COMMAND_NAME = "countblocks";
 
-    public static ServerCommandArgumentBuilder getServerCommandFormat(ServerCommandRegistryAccess registryAccess, ServerCommand CountBlocksCommand, ServerCommand CountBlocksWithoutItemArgumentCommand) {
+    public static ServerCommandArgumentBuilder getDefaultServerCommandFormat(ServerCommandRegistryAccess registryAccess, ServerCommand CountBlocksCommand, ServerCommand CountBlocksWithoutItemArgumentCommand) {
         return new ServerCommandArgumentBuilder()
             .beginCommand(CommandCountBlocks.COMMAND_NAME, null)
             .addBlockPosArgument(CommandCountBlocks.FIRST_POSITION_ARGUMENT_NAME, null)
             .addBlockPosArgument(CommandCountBlocks.SECOND_POSITION_ARGUMENT_NAME, CountBlocksWithoutItemArgumentCommand)
             .addItemStackArgument(CommandCountBlocks.BLOCK_ARGUMENT_NAME, CountBlocksCommand, registryAccess)
+            .endCommand();
+    }
+
+    public static ServerCommandArgumentBuilder getTranslatedServerCommandFormat(
+        ServerCommandRegistryAccess registryAccess,
+        CommandCountBlocks CountBlocksCommand,
+        CommandCountBlocksWithoutItemArgument CountBlocksWithoutItemArgumentCommand) {
+        TranslationText.TRANSLATED_TO_DEFAULT_MAP.put(TranslationText.commandCountBlocks.getString(), COMMAND_NAME);
+
+        return new ServerCommandArgumentBuilder()
+            .beginCommand(TranslationText.commandCountBlocks.getString(), null)
+            .addBlockPosArgument(TranslationText.commandArgumentFirstPosition.getString(), null)
+            .addBlockPosArgument(TranslationText.commandArgumentSecondPosition.getString(), CountBlocksWithoutItemArgumentCommand)
+            .addItemStackArgument(TranslationText.commandArgumentBlockName.getString(), CountBlocksCommand, registryAccess)
             .endCommand();
     }
 
