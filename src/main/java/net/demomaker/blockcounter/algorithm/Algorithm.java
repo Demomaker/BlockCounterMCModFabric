@@ -18,6 +18,7 @@ import net.demomaker.blockcounter.adapter.block.BlockPos;
 public class Algorithm {
     private ServerWorld serverWorld = null;
     private boolean stopAlgorithm = false;
+    private boolean isRunning = false;
     public void setServerWorld(ServerWorld serverWorld) {
         this.serverWorld = serverWorld;
     }
@@ -27,6 +28,7 @@ public class Algorithm {
     }
 
     public BlockEntries execute(CommandConfig commandConfig) throws Exception {
+        this.isRunning = true;
         this.setServerWorld(commandConfig.serverWorld);
         return this.GetBlockEntriesByCount(commandConfig.firstPosition, commandConfig.secondPosition, commandConfig.itemFilter);
     }
@@ -47,6 +49,7 @@ public class Algorithm {
         for(String key : localBlockCounts.keySet()) {
             blockEntries.add(new BlockEntry(new ItemName(key), localBlockCounts.get(key)));
         }
+        this.isRunning = false;
         return new BlockEntries(blockEntries);
     }
 
@@ -93,6 +96,10 @@ public class Algorithm {
             yBoundaries.highest,
             zBoundaries.highest
         );
+    }
+
+    public boolean isRunning() {
+        return this.isRunning;
     }
 }
 

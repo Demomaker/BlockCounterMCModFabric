@@ -27,10 +27,10 @@ public class CommandSetPosition extends BasicCommand {
 
     @Override
   public int run(ServerCommandContext context) {
-    return countBlocks(context, new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem()));
+    return countBlocks(context, new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem()), null);
   }
 
-  public int countBlocks(ServerCommandContext context, Item item) {
+  public int countBlocks(ServerCommandContext context, Item item, BlockPos blockPos) {
     try {
       CommandExecutionConfig currentCommandExecutionConfig = CommandExecutionConfigResolver.getConfigFromContext(context);
       SetPositionCommandConfig setPositionCommandConfig = currentCommandExecutionConfig.getCommandConfigs()
@@ -42,17 +42,22 @@ public class CommandSetPosition extends BasicCommand {
       BlockPos secondPosition = currentCommandExecutionConfig.getCommandConfigs().getSetPositionCommandConfig().secondPosition;
       ItemStack bookAndQuil = EntityResolver.getBookAndQuillFromContext(context);
 
-      Vec3d entityPosition = getPositionOfEntityFromContext(context);
-      int x = MathHelper.floor(entityPosition.getX());
-      int y = MathHelper.floor(entityPosition.getY());
-      int z = MathHelper.floor(entityPosition.getZ());
+      BlockPos additionalPosition = blockPos;
+      if(additionalPosition == null) {
+        Vec3d entityPosition = getPositionOfEntityFromContext(context);
+        int x = MathHelper.floor(entityPosition.getX());
+        int y = MathHelper.floor(entityPosition.getY());
+        int z = MathHelper.floor(entityPosition.getZ());
+        additionalPosition = new BlockPos(x, y, z);
+      }
+
 
       if (firstPosition == null) {
-        firstPosition = new BlockPos(x, y, z);
+        firstPosition = additionalPosition;
         setFirstPosition(currentCommandExecutionConfig, firstPosition, bookAndQuil);
       }
       else if (secondPosition == null) {
-        secondPosition = new BlockPos(x, y, z);
+        secondPosition = additionalPosition;
         setSecondPosition(currentCommandExecutionConfig, secondPosition, bookAndQuil);
       }
 
@@ -61,9 +66,9 @@ public class CommandSetPosition extends BasicCommand {
           + positionWord
           + " position at : "
           + "("
-          + "x: " + x
-          + ", y: " + y
-          + ", z: " + z
+          + "x: " + additionalPosition.getX()
+          + ", y: " + additionalPosition.getY()
+          + ", z: " + additionalPosition.getZ()
           + ")";
       context.sendFeedback(chatMessage, false);
 
