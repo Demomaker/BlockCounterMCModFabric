@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
 import net.demomaker.blockcounter.adapter.player.GameProfile;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandDispatcher;
-import net.demomaker.blockcounter.adapter.servercommand.ServerCommandRegistryAccess;
 import net.demomaker.blockcounter.algorithm.Algorithm;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 import net.demomaker.blockcounter.command.config.SetPositionCommandConfig;
@@ -18,10 +17,8 @@ import net.demomaker.blockcounter.util.ModObjects;
 import net.demomaker.blockcounter.util.TranslationText;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.CommandManager.RegistrationEnvironment;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.ActionResult;
@@ -39,19 +36,19 @@ public class ModCommands {
     public static final CommandSetPosition COMMAND_SET_POSITION = new CommandSetPosition();
     public static final CommandSetPositionWithoutItemArgument COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT = new CommandSetPositionWithoutItemArgument();
     public static final HelpCommand HELP_COMMAND = new HelpCommand();
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, RegistrationEnvironment ignoredEnvironment) {
-        dispatcher.register(CommandCountBlocks.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
-        dispatcher.register(CommandSetPosition.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
-        dispatcher.register(HelpCommand.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean b) {
+        dispatcher.register(CommandCountBlocks.getDefaultServerCommandFormat(COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        dispatcher.register(CommandSetPosition.getDefaultServerCommandFormat(COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+        dispatcher.register(HelpCommand.getDefaultServerCommandFormat(HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
 
         if(!TranslationText.commandCountBlocks.getString().equals(CommandCountBlocks.COMMAND_NAME)) {
-            dispatcher.register(CommandCountBlocks.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(CommandCountBlocks.getTranslatedServerCommandFormat(COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
         if(!TranslationText.commandSetPosition.getString().equals(CommandSetPosition.COMMAND_NAME)) {
-            dispatcher.register(CommandSetPosition.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(CommandSetPosition.getTranslatedServerCommandFormat(COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
         if(!TranslationText.commandHelp.getString().equals(HelpCommand.COMMAND_NAME)) {
-            dispatcher.register(HelpCommand.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(HelpCommand.getTranslatedServerCommandFormat(HELP_COMMAND).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
 
         net.minecraft.server.command.HelpCommand.register(dispatcher);
