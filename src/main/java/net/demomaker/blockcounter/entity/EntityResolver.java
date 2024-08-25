@@ -1,15 +1,16 @@
 package net.demomaker.blockcounter.entity;
 
-import net.demomaker.blockcounter.adapter.entity.BlockEntity;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.demomaker.blockcounter.adapter.block.BlockPos;
+import net.demomaker.blockcounter.adapter.entity.BlockEntity;
 import net.demomaker.blockcounter.adapter.entity.CommandBlockBlockEntity;
 import net.demomaker.blockcounter.adapter.entity.CommandBlockMinecartEntity;
 import net.demomaker.blockcounter.adapter.entity.Entity;
-import net.demomaker.blockcounter.adapter.item.ItemStack;
-import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
 import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
-import net.demomaker.blockcounter.adapter.world.ServerWorld;
+import net.demomaker.blockcounter.adapter.item.ItemStack;
 import net.demomaker.blockcounter.adapter.math.Vec3d;
+import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
+import net.demomaker.blockcounter.adapter.world.ServerWorld;
 
 
 public class EntityResolver {
@@ -22,7 +23,11 @@ public class EntityResolver {
   }
 
   public static ServerPlayerEntity getPlayerFromContext(ServerCommandContext context) {
-    return new ServerPlayerEntity(context.getSource().getPlayer());
+    try {
+      return new ServerPlayerEntity(context.getSource().getPlayer());
+    } catch (CommandSyntaxException e) {
+      return new ServerPlayerEntity(null);
+    }
   }
 
   public static CommandBlockBlockEntity getCommandBlockFromContext(ServerCommandContext context) {

@@ -11,7 +11,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import java.util.ArrayList;
 import java.util.List;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommand;
-import net.demomaker.blockcounter.adapter.servercommand.ServerCommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -36,11 +35,10 @@ public class CommandDefinition {
     return this;
   }
 
-  public CommandDefinition addItemStackArgument(String name, ServerCommand serverCommand,
-      ServerCommandRegistryAccess serverCommandRegistryAccess) {
+  public CommandDefinition addItemStackArgument(String name, ServerCommand serverCommand) {
     CommandArgument<ItemStackArgumentType> commandArgument = new CommandArgument<>();
     commandArgument.name = name;
-    commandArgument.type = ItemStackArgumentType.itemStack(serverCommandRegistryAccess.getCommandRegistryAccess());
+    commandArgument.type = ItemStackArgumentType.itemStack();
     commandArgument.serverCommand = serverCommand;
     commandArguments.add(commandArgument);
     return this;
