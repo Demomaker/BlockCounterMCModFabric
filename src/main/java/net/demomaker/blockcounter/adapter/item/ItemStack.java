@@ -3,6 +3,7 @@ package net.demomaker.blockcounter.adapter.item;
 import java.util.ArrayList;
 import java.util.List;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
+import net.demomaker.blockcounter.util.NbtUtils;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.nbt.NbtCompound;
@@ -19,7 +20,7 @@ public record ItemStack(net.minecraft.item.ItemStack itemStack) {
   public List<Text> getBookContent() {
     List<Text> pages = new ArrayList<>();
 
-    NbtCompound nbt = itemStack().getNbt();
+    NbtCompound nbt = NbtUtils.getNbt(this);
     if(getItem().isWritableBook()) {
       if(nbt != null && nbt.contains("pages", 9)) {
         NbtList pageList = nbt.getList("pages", 8);
@@ -35,7 +36,7 @@ public record ItemStack(net.minecraft.item.ItemStack itemStack) {
 
   public void setBookContent(List<Text> pages) {
     if(getItem().isWritableBook()) {
-      NbtCompound nbt = itemStack().getOrCreateNbt();
+      NbtCompound nbt = NbtUtils.getOrCreateNbt(this);
       NbtList pageList = new NbtList();
 
       for(Text page: pages) {

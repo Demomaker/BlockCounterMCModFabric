@@ -5,6 +5,7 @@ import java.util.List;
 import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
 import net.demomaker.blockcounter.adapter.item.ItemStack;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
+import net.demomaker.blockcounter.util.ModObjects;
 import net.minecraft.text.Text;
 public class BookWriter {
   public static final int MAX_PAGE_LENGTH = 200;
@@ -65,7 +66,7 @@ public class BookWriter {
 
 
   public static void detectPlayersWithBookAndQuillAndWrite(ServerCommandContext context, String message) {
-    for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList().stream().map(
+    for (ServerPlayerEntity player : ModObjects.minecraftServer.getPlayerManager().getPlayerList().stream().map(
         ServerPlayerEntity::new).toList()) {
       ItemStack mainHandItemStack = player.getMainHandStack();
       ItemStack offHandItemStack = player.getOffHandStack();
