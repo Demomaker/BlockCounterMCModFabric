@@ -51,13 +51,25 @@ public class BookWriter {
     }
 
     int length = input.length();
-    for (int i = 0; i < length; i += maxLength) {
-      String substring = input.substring(i, Math.min(length, i + maxLength));
-      result.add(substring);
+    int offset = 0;
+
+    while (offset < length) {
+      int end = Math.min(offset + maxLength, length);
+
+      int lastNewline = input.lastIndexOf('\n', end);
+
+      if (lastNewline >= offset) {
+        result.add(input.substring(offset, lastNewline + 1));
+        offset = lastNewline + 1;
+      } else {
+        result.add(input.substring(offset, end));
+        offset = end;
+      }
     }
 
     return result;
   }
+
 
   public static void detectPlayersWithBookAndQuillAndWrite(ServerCommandContext context, String message) {
     for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList().stream().map(

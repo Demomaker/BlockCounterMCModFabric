@@ -14,6 +14,11 @@ import net.demomaker.blockcounter.blockentity.BlockEntry;
 import net.demomaker.blockcounter.blockentity.DoubledBlockItemNames;
 import net.demomaker.blockcounter.blockentity.ItemName;
 import net.demomaker.blockcounter.command.config.CommandConfig;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.Language;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 
 public class Algorithm {
@@ -74,6 +79,7 @@ public class Algorithm {
                         continue;
                     }
                     ItemName currentItemName = getItemNameAt(currentBlockPos);
+
                     if((itemName.equals("") || currentItemName.equals(itemName)))
                     {
                         blockCoordinatesToIgnore.addAll(ignoreCoordinatesOfCoupledBlock(currentBlockPos, currentItemName, blockCoordinatesToIgnore));
@@ -87,6 +93,7 @@ public class Algorithm {
                 }
             }
         }
+        blockCounts.putAll(getEntityCountsInArea(serverWorld.serverWorld(), firstPosition, secondPosition));
         return blockCounts;
     }
 
@@ -107,7 +114,28 @@ public class Algorithm {
 
     private ItemName getItemNameAt(BlockPos blockPos) {
         Block currentBlock = new Block(serverWorld.getBlockState(blockPos).getBlock());
-        return new ItemName(currentBlock.asItem().getName().getString());
+        ItemName itemName = new ItemName(Language.getInstance().get(currentBlock.block().getTranslationKey()));
+        if(itemName.getString().equals("Air")) {
+            itemName = new ItemName(serverWorld.getBlockState(blockPos).getFluidState().getFluid().getDefaultState().getRegistryEntry().getIdAsString());
+        }
+
+        if(itemName.getString().equals("Empty")) {
+            itemName = new ItemName("Air");
+        }
+        return itemName;
+    }
+
+    public Map<String, BlockCount> getEntityCountsInArea(World world, BlockPos start, BlockPos end) {
+        Map<String, BlockCount> entityCounts = new HashMap<>();
+        Box box = new Box(new Vec3d(start.getX(), start.getY(), start.getZ()), new Vec3d(end.getX(), end.getY(), end.getZ())); // Create a bounding box from start to end positions
+        for (Entity entity : world.getEntitiesByClass(Entity.class, box, entity -> true)) {
+            String name = Language.getInstance().get(entity.getType().getTranslationKey());
+            if(entityCounts.containsKey(name))
+                entityCounts.replace(name, entityCounts.get(name).increment());
+            else
+                entityCounts.putIfAbsent(name, new BlockCount());
+        }
+        return entityCounts;
     }
 
     private List<BlockPos> ignoreCoordinatesOfCoupledBlock(BlockPos blockPos, ItemName itemName, List<BlockPos> existingIgnoredCoordinates) {
