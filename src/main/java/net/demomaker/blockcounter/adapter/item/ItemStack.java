@@ -6,9 +6,9 @@ import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
 import net.demomaker.blockcounter.util.NbtUtils;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.text.Text;
 
 public record ItemStack(net.minecraft.item.ItemStack itemStack) {
@@ -20,14 +20,15 @@ public record ItemStack(net.minecraft.item.ItemStack itemStack) {
   public List<Text> getBookContent() {
     List<Text> pages = new ArrayList<>();
 
-    NbtCompound nbt = NbtUtils.getNbt(this);
+    CompoundTag nbt = NbtUtils.getNbt(this);
     if(getItem().isWritableBook()) {
       if(nbt != null && nbt.contains("pages", 9)) {
-        NbtList pageList = nbt.getList("pages", 8);
+        ListTag pageList = nbt.getList("pages", 8);
 
         for(int i = 0; i < pageList.size(); i++) {
           String pageText = pageList.getString(i);
-          pages.add(Text.of(pageText));
+          Text text = Text.of(pageText);
+          pages.add(text);
         }
       }
     }
@@ -36,11 +37,11 @@ public record ItemStack(net.minecraft.item.ItemStack itemStack) {
 
   public void setBookContent(List<Text> pages) {
     if(getItem().isWritableBook()) {
-      NbtCompound nbt = NbtUtils.getOrCreateNbt(this);
-      NbtList pageList = new NbtList();
+      CompoundTag nbt = NbtUtils.getOrCreateNbt(this);
+      ListTag pageList = new ListTag();
 
       for(Text page: pages) {
-        pageList.add(NbtString.of(page.getString()));
+        pageList.add(StringTag.of(page.getString()));
       }
 
       nbt.put("pages", pageList);

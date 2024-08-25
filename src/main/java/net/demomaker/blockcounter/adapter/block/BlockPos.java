@@ -1,8 +1,8 @@
 package net.demomaker.blockcounter.adapter.block;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
 import net.demomaker.blockcounter.adapter.math.Vec3d;
+import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
 import net.minecraft.command.argument.BlockPosArgumentType;
 
 public class BlockPos {
