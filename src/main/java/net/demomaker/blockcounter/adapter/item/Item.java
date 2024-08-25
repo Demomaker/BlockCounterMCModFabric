@@ -12,4 +12,8 @@ public record Item(net.minecraft.item.Item item) {
   public boolean isWritableBook() {
     return item() == Items.WRITABLE_BOOK;
   }
+
+  public boolean isNull() {
+    return this.item == null;
+  }
 }

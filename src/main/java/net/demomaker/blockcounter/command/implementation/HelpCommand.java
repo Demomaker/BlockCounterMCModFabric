@@ -33,11 +33,18 @@ public class HelpCommand extends ServerCommand {
 
   @Override
   public int run(ServerCommandContext commandContext) {
-    String commandName = StringArgumentType.getString(commandContext.commandContext(), COMMAND_NAME);
-    if (commandName == null) {
-      commandName = StringArgumentType.getString(commandContext.commandContext(), TranslationText.commandArgumentCommandName.getString());
-      commandName = TranslationText.getDefaultEnglishEquivalent(commandName);
-    }
+    String commandName = null;
+    try {
+      commandName = StringArgumentType.getString(commandContext.commandContext(), COMMAND_NAME);
+    } catch (Exception ignored) {}
+
+    try {
+      if (commandName == null) {
+        commandName = StringArgumentType.getString(commandContext.commandContext(), TranslationText.commandArgumentCommandName.getString());
+        commandName = TranslationText.getDefaultEnglishEquivalent(commandName);
+      }
+    } catch (Exception ignored) {}
+
     String resultMessage = ResultMessageCreator.createHelpMessage(commandName);
 
     try {
@@ -49,5 +56,6 @@ public class HelpCommand extends ServerCommand {
     catch (Exception ignored) {}
 
     commandContext.sendFeedback(resultMessage, false);
+    return 0;
   }
 }

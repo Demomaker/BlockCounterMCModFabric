@@ -44,16 +44,17 @@ public class ModCommands {
         dispatcher.register(CommandSetPosition.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         dispatcher.register(HelpCommand.getDefaultServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
 
-
         if(!TranslationText.commandCountBlocks.getString().equals(CommandCountBlocks.COMMAND_NAME)) {
-            dispatcher.register(CommandCountBlocks.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(CommandCountBlocks.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_COUNT_BLOCKS, COMMAND_COUNT_BLOCKS_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
         if(!TranslationText.commandSetPosition.getString().equals(CommandSetPosition.COMMAND_NAME)) {
-            dispatcher.register(CommandSetPosition.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(CommandSetPosition.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), COMMAND_SET_POSITION, COMMAND_SET_POSITION_WITHOUT_ITEM_ARGUMENT).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
         if(!TranslationText.commandHelp.getString().equals(HelpCommand.COMMAND_NAME)) {
-            dispatcher.register(HelpCommand.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
+            dispatcher.register(HelpCommand.getTranslatedServerCommandFormat(new ServerCommandRegistryAccess(registryAccess), HELP_COMMAND).toTranslatedLiteralArgumentBuilder(new ServerCommandDispatcher(dispatcher)));
         }
+
+        net.minecraft.server.command.HelpCommand.register(dispatcher);
     }
 
     public static void disconnect(ServerPlayNetworkHandler handler, MinecraftServer ignoredServer) {
@@ -67,7 +68,7 @@ public class ModCommands {
         ModObjects.commandExecutionConfigs.addConfig(newPlayerConfig);
     }
 
-    public static ActionResult blockLeftClick(PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction direction) {
+    public static ActionResult blockLeftClick(PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction ignoredDirection) {
         long currentTime = System.currentTimeMillis();
 
         if (world.isClient && hand == Hand.MAIN_HAND && currentTime - lastExecutionTime >= COOLDOWN_PERIOD && !blockAlreadyAttacked) {

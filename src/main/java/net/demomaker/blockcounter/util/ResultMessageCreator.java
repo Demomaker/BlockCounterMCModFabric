@@ -10,50 +10,50 @@ public class ResultMessageCreator {
         + TranslationText.numberOfBlocks.getString() + "\n"
         + blockEntries.toString()
         + "-------------------\n"
-        + TranslationText.total + blockEntries.calculateTotal().toString() + "\n"
+        + TranslationText.total.getString() + blockEntries.calculateTotal().toString() + "\n"
         + "===================\n";
   }
 
   public static String createOneLiner(BlockEntries blockEntries) {
-    return "[" + TranslationText.title.getString() + "]||" + TranslationText.numberOfBlocks.getString() + blockEntries.toOneLinerString() + "|" + TranslationText.total + blockEntries.calculateTotal().toString() + "||";
+    return "[" + TranslationText.title.getString() + "]||" + TranslationText.numberOfBlocks.getString() + blockEntries.toOneLinerString() + "|" + TranslationText.total.getString() + blockEntries.calculateTotal().toString() + "||";
   }
 
   public static String createHelpMessage(String commandName) {
     if(commandName == null) {
-      return ""; //Full Help Message
+      return TranslationText.commandHelpMessageCommon.getString();
     }
 
     switch(commandName) {
       case CommandSetPosition.COMMAND_NAME -> {
-        return ""; //Command Set Position Help Message
+        return TranslationText.commandHelpMessageSetPosition.getString();
       }
 
       case CommandCountBlocks.COMMAND_NAME -> {
-        return ""; //Command Count Blocks Help Message
+        return TranslationText.commandHelpMessageCountBlocks.getString();
       }
 
       default -> {
-        return ""; //Indicate unknown command
+        return TranslationText.commandHelpMessageCommon.getString();
       }
     }
   }
 
   public static String createHelpMessageOneLiner(String commandName) {
     if(commandName == null) {
-      return ""; //Full Help Message
+      return TranslationText.commandHelpMessageOneLinerCommon.getString();
     }
 
     switch(commandName) {
       case CommandSetPosition.COMMAND_NAME -> {
-        return ""; //Command Set Position Help Message
+        return TranslationText.commandHelpMessageOneLinerSetPosition.getString();
       }
 
       case CommandCountBlocks.COMMAND_NAME -> {
-        return ""; //Command Count Blocks Help Message
+        return TranslationText.commandHelpMessageOneLinerCountBlocks.getString();
       }
 
       default -> {
-        return ""; //Indicate unknown command
+        return TranslationText.commandHelpMessageOneLinerCommon.getString();
       }
     }
   }

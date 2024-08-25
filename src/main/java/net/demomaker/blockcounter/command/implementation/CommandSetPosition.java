@@ -40,7 +40,17 @@ public class CommandSetPosition extends BasicCommand {
 
   @Override
   public int run(ServerCommandContext context) {
-    return countBlocks(context, new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem()), null);
+    Item item = new Item(null);
+    try {
+      item = new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem());
+    } catch (Exception ignored) {}
+
+    try {
+      if (item.isNull()) {
+        item = new Item(ItemStack.getArgument(context, TranslationText.commandArgumentBlockName.getString()).getItem());
+      }
+    } catch (Exception ignored) {}
+    return countBlocks(context, item, null);
   }
 
   public int countBlocks(ServerCommandContext context, Item item, BlockPos blockPos) {

@@ -39,14 +39,36 @@ public class CommandCountBlocks extends BasicCommand {
 
     @Override
     public int run(ServerCommandContext context) {
-        Item item = new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem());
+        Item item = new Item(null);
+        try {
+            item = new Item(ItemStack.getArgument(context, BLOCK_ARGUMENT_NAME).getItem());
+        } catch (Exception ignored) {}
+
+        try {
+            if (item.isNull()) {
+                item = new Item(ItemStack.getArgument(context, TranslationText.commandArgumentBlockName.getString()).getItem());
+            }
+        } catch (Exception ignored) {}
+
         return countBlocks(context, item);
     }
 
     public int countBlocks(ServerCommandContext context, Item item) {
+        BlockPos firstPosition = new BlockPos(null);
+        BlockPos secondPosition = new BlockPos(null);
         try {
-            BlockPos firstPosition = BlockPos.getBlockPos(context, FIRST_POSITION_ARGUMENT_NAME);
-            BlockPos secondPosition = BlockPos.getBlockPos(context, SECOND_POSITION_ARGUMENT_NAME);
+            firstPosition = BlockPos.getBlockPos(context, FIRST_POSITION_ARGUMENT_NAME);
+            secondPosition = BlockPos.getBlockPos(context, SECOND_POSITION_ARGUMENT_NAME);
+        } catch (Exception ignored) {}
+
+        try {
+            if(secondPosition.isNull()) {
+                firstPosition = BlockPos.getBlockPos(context, TranslationText.commandArgumentFirstPosition.getString());
+                secondPosition = BlockPos.getBlockPos(context, TranslationText.commandArgumentSecondPosition.getString());
+            }
+        } catch (Exception ignored) {}
+
+        try {
             ItemStack bookAndQuill = EntityResolver.getBookAndQuillFromContext(context);
             return super.countBlocks(context, new CommandConfig(firstPosition, secondPosition, item, bookAndQuill, getServerWorldFromContext(context)));
         }

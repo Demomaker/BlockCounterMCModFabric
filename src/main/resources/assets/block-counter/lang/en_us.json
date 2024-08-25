@@ -3,6 +3,7 @@
   "blockcounter.description": "This is a mod for counting blocks.\n\nUse this command to count :\n/blockcounter countblocks <firstPositionX> <firstPositionY> <firstPositionZ> <secondPositionX> <secondPositionY> <secondPositionZ> [optionalBlockFilter]\n",
   "blockcounter.total": "Total : ",
   "blockcounter.numberOfBlocks": "Number Of Blocks : ",
+  "blockcounter.command.precommand": "blockcounter",
   "blockcounter.command.countblocks": "countblocks",
   "blockcounter.command.setposition": "setposition",
   "blockcounter.command.help": "help",
@@ -10,4 +11,10 @@
   "blockcounter.command.arguments.secondposition": "second_position",
   "blockcounter.command.arguments.blockname": "block_name",
   "blockcounter.command.arguments.commandname": "command_name",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'countblocks <first_position> <second_position> [blockname]' :\ncounts blocks from first position to second position.\nOptionally, only keeps blocks with specified blockname filter.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'setposition [blockname]' :\non first use, sets the first position;\non second use, sets the second position and\ncounts the blocks between the two positions.\nOptionally, only keeps blocks with specified blockname filter.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <countblocks|setposition>' :\ncount blocks from one position to another.\nYou can also use a book and quill :\nhold it in hand while executing the commands for the output to be in the book.\nYou can also left-click with a book and quill to use the setposition command on a particular block.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'countblocks <first_position> <second_position> [blockname]' : counts blocks from first position to second position. Optionally, only keeps blocks with specified blockname filter.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'setposition [blockname]' : on first use, sets the first position; on second use, sets the second position and counts the blocks between the two positions. Optionally, only keeps blocks with specified blockname filter.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <countblocks|setposition>' : count blocks from one position to another. You can also use a book and quill : hold it in hand while executing the commands for the output to be in the book. You can also left-click with a book and quill to use the setposition command on a particular block.||"
 }

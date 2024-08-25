@@ -56,4 +56,8 @@ public class BlockPos {
       return false;
     }
   }
+
+  public boolean isNull() {
+    return this.blockPos == null;
+  }
 }
