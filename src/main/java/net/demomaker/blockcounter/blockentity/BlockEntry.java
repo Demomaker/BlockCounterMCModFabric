@@ -1,9 +1,9 @@
 package net.demomaker.blockcounter.blockentity;
 
 public class BlockEntry {
-  private String nameAndCountSeparator = " : ";
-  private ItemName itemName;
-  private BlockCount blockCount;
+  private final static String nameAndCountSeparator = " : ";
+  private final ItemName itemName;
+  private final BlockCount blockCount;
   public BlockEntry(ItemName itemName, BlockCount blockCount) {
     this.itemName = itemName;
     this.blockCount = blockCount;
@@ -11,7 +11,7 @@ public class BlockEntry {
 
   @Override
   public String toString() {
-    return itemName.getString() + nameAndCountSeparator + blockCount.toString();
+    return itemName.getString() + nameAndCountSeparator + getBlockCount().toString();
   }
 
   public BlockCount getBlockCount() {

@@ -1,9 +1,9 @@
 package net.demomaker.blockcounter.command.config;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.demomaker.blockcounter.adapter.item.Item;
+import net.demomaker.blockcounter.adapter.item.ItemStack;
+import net.demomaker.blockcounter.adapter.world.ServerWorld;
+import net.demomaker.blockcounter.adapter.block.BlockPos;
 
 public class SetPositionCommandConfig extends CommandConfig {
 

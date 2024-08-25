@@ -1,12 +1,12 @@
-package net.demomaker.blockcounter.config;
+package net.demomaker.blockcounter.identity;
 
 import net.demomaker.blockcounter.algorithm.Algorithm;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 
 public class CommandBlockConfig implements CommandExecutionConfig {
-  private String name;
-  private Algorithm algorithm;
-  private CommandConfigs commandConfigs;
+  private final String name;
+  private final Algorithm algorithm;
+  private final CommandConfigs commandConfigs;
   public CommandBlockConfig(String name, Algorithm algorithm, CommandConfigs commandConfigs) {
     this.name = name;
     this.algorithm = algorithm;

@@ -29,6 +29,6 @@ public record ServerCommandContext(
   }
 
   public void sendFeedback(String message, boolean broadcastToOps) {
-    this.commandContext().getSource().sendFeedback(Text.of(message), broadcastToOps);
+    this.commandContext().getSource().sendFeedback(() -> Text.of(message), broadcastToOps);
   }
 }

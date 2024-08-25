@@ -1,4 +1,4 @@
-package net.demomaker.blockcounter.config;
+package net.demomaker.blockcounter.identity;
 
 import net.demomaker.blockcounter.algorithm.Algorithm;
 import net.demomaker.blockcounter.command.config.CommandConfigs;

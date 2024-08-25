@@ -1,4 +1,4 @@
-package net.demomaker.blockcounter.config;
+package net.demomaker.blockcounter.identity;
 
 import java.util.HashMap;
 import java.util.Map;

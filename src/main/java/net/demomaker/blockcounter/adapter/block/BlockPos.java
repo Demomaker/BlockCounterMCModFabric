@@ -1,6 +1,5 @@
 package net.demomaker.blockcounter.adapter.block;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
 import net.demomaker.blockcounter.adapter.math.Vec3d;
 import net.minecraft.command.argument.BlockPosArgumentType;
@@ -19,17 +18,12 @@ public class BlockPos {
     this.blockPos = null;
   }
 
-  public static BlockPos getBlockPos(ServerCommandContext context, String argumentName)
-      throws CommandSyntaxException {
+  public static BlockPos getBlockPos(ServerCommandContext context, String argumentName) {
     return new BlockPos(BlockPosArgumentType.getBlockPos(context.commandContext(), argumentName));
   }
 
   public static BlockPos ofFloored(Vec3d position) {
-    int flooredX = (int) Math.floor(position.getX());
-    int flooredY = (int) Math.floor(position.getY());
-    int flooredZ = (int) Math.floor(position.getZ());
-    net.minecraft.util.math.BlockPos blockPos1 = new net.minecraft.util.math.BlockPos(flooredX, flooredY, flooredZ);
-    return new BlockPos(blockPos1);
+    return new BlockPos(net.minecraft.util.math.BlockPos.ofFloored(position.vec3d()));
   }
 
   public int getX() {
@@ -45,7 +39,7 @@ public class BlockPos {
   }
 
   public Vec3d toCenterPos() {
-    return this.getBlockPos() == null ? Vec3d.ZERO : new Vec3d(getBlockCenterPos(this).vec3d());
+    return this.getBlockPos() == null ? Vec3d.ZERO : new Vec3d(this.getBlockPos().toCenterPos());
   }
 
   public net.minecraft.util.math.BlockPos getBlockPos() {
@@ -65,12 +59,5 @@ public class BlockPos {
 
   public boolean isNull() {
     return this.blockPos == null;
-  }
-
-  private static Vec3d getBlockCenterPos(BlockPos pos) {
-    double x = pos.getX() + 0.5;
-    double y = pos.getY() + 0.5;
-    double z = pos.getZ() + 0.5;
-    return new Vec3d(new net.minecraft.util.math.Vec3d(x, y, z));
   }
 }

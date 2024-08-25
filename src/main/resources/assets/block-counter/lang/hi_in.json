@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "ब्लॉक काउंटर",
+  "blockcounter.description": "यह एक मॉड है ब्लॉकों की गिनती के लिए।\n\nइस कमांड का उपयोग करें गिनती के लिए:\n/blockcounter ब्लॉकोंगिनो <पहलीस्थितिX> <पहलीस्थितिY> <पहलीस्थितिZ> <दूसरीस्थितिX> <दूसरीस्थितिY> <दूसरीस्थितिZ> [वैकल्पिकब्लॉकफिल्टर]\n",
+  "blockcounter.total": "कुल: ",
+  "blockcounter.numberOfBlocks": "ब्लॉकों की संख्या: ",
+  "blockcounter.command.precommand": "ब्लॉककाउंटर",
+  "blockcounter.command.countblocks": "ब्लॉकोंगिनो",
+  "blockcounter.command.setposition": "स्थिति सेट करें",
+  "blockcounter.command.help": "मदद",
+  "blockcounter.command.arguments.firstposition": "पहली_स्थिति",
+  "blockcounter.command.arguments.secondposition": "दूसरी_स्थिति",
+  "blockcounter.command.arguments.blockname": "ब्लॉक_नाम",
+  "blockcounter.command.arguments.commandname": "कमांड_नाम",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'ब्लॉकोंगिनो <पहली_स्थिति> <दूसरी_स्थिति> [ब्लॉक_नाम]' :\nपहली स्थिति से दूसरी स्थिति तक ब्लॉकों की गिनती करें।\nवैकल्पिक रूप से, केवल ब्लॉक_नाम फिल्टर के साथ ब्लॉक बनाए रखें।\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'स्थिति सेट करें [ब्लॉक_नाम]' :\nपहली बार उपयोग पर, पहली स्थिति सेट करें;\nदूसरी बार उपयोग पर, दूसरी स्थिति सेट करें और दोनों स्थितियों के बीच ब्लॉकों की गिनती करें।\nवैकल्पिक रूप से, केवल ब्लॉक_नाम फिल्टर के साथ ब्लॉक बनाए रखें।\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <ब्लॉकोंगिनो|स्थिति सेट करें>' :\nएक स्थिति से दूसरी स्थिति तक ब्लॉकों की गिनती करें।\nआप पुस्तक और कलम का भी उपयोग कर सकते हैं:\nकमांड्स को निष्पादित करते समय इसे हाथ में पकड़ें ताकि आउटपुट पुस्तक में हो।\nआप पुस्तक और कलम के साथ किसी ब्लॉक पर बायां क्लिक करके भी स्थिति सेट करने का कमांड उपयोग कर सकते हैं।\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'ब्लॉकोंगिनो <पहली_स्थिति> <दूसरी_स्थिति> [ब्लॉक_नाम]' : पहली स्थिति से दूसरी स्थिति तक ब्लॉकों की गिनती करें। वैकल्पिक रूप से, केवल ब्लॉक_नाम फिल्टर के साथ ब्लॉक बनाए रखें।||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'स्थिति सेट करें [ब्लॉक_नाम]' : पहली बार उपयोग पर, पहली स्थिति सेट करें; दूसरी बार उपयोग पर, दूसरी स्थिति सेट करें और दोनों स्थितियों के बीच ब्लॉकों की गिनती करें। वैकल्पिक रूप से, केवल ब्लॉक_नाम फिल्टर के साथ ब्लॉक बनाए रखें।||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <ब्लॉकोंगिनो|स्थिति सेट करें>' : एक स्थिति से दूसरी स्थिति तक ब्लॉकों की गिनती करें। आप पुस्तक और कलम का भी उपयोग कर सकते हैं: कमांड्स को निष्पादित करते समय इसे हाथ में पकड़ें ताकि आउटपुट पुस्तक में हो। आप पुस्तक और कलम के साथ किसी ब्लॉक पर बायां क्लिक करके भी स्थिति सेट करने का कमांड उपयोग कर सकते हैं।||"
+}

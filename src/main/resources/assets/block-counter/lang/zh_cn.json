@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "方块计数器",
+  "blockcounter.description": "这是一个用于计数方块的模组。\n\n使用此命令进行计数:\n/blockcounter 计数方块 <第一个位置X> <第一个位置Y> <第一个位置Z> <第二个位置X> <第二个位置Y> <第二个位置Z> [可选方块过滤器]\n",
+  "blockcounter.total": "总计: ",
+  "blockcounter.numberOfBlocks": "方块数量: ",
+  "blockcounter.command.precommand": "方块计数器",
+  "blockcounter.command.countblocks": "计数方块",
+  "blockcounter.command.setposition": "设置位置",
+  "blockcounter.command.help": "帮助",
+  "blockcounter.command.arguments.firstposition": "第一个位置",
+  "blockcounter.command.arguments.secondposition": "第二个位置",
+  "blockcounter.command.arguments.blockname": "方块名称",
+  "blockcounter.command.arguments.commandname": "命令名称",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'计数方块 <第一个位置> <第二个位置> [方块名称]' :\n计数从第一个位置到第二个位置的方块。\n可选的, 只保留指定的方块名称过滤器的方块。\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'设置位置 [方块名称]' :\n第一次使用时, 设置第一个位置;\n第二次使用时, 设置第二个位置并计数两个位置之间的方块。\n可选的, 只保留指定的方块名称过滤器的方块。\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <计数方块|设置位置>' :\n计数从一个位置到另一个位置的方块。\n您还可以使用书和笔:\n执行命令时手持书本将结果显示在书中。\n您还可以用书和笔右键点击方块, 使用设置位置命令在特定方块上。\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| '计数方块 <第一个位置> <第二个位置> [方块名称]' : 计数从第一个位置到第二个位置的方块。 可选的, 只保留指定的方块名称过滤器的方块。||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| '设置位置 [方块名称]' : 第一次使用时, 设置第一个位置; 第二次使用时, 设置第二个位置并计数两个位置之间的方块。 可选的, 只保留指定的方块名称过滤器的方块。||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <计数方块|设置位置>' : 计数从一个位置到另一个位置的方块。 您还可以使用书和笔: 执行命令时手持书本将结果显示在书中。 您还可以用书和笔右键点击方块, 使用设置位置命令在特定方块上。||"
+}

@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "Blockzähler",
+  "blockcounter.description": "Dies ist ein Mod zum Zählen von Blöcken.\n\nVerwenden Sie diesen Befehl zum Zählen:\n/blockcounter blockszählen <erstePositionX> <erstePositionY> <erstePositionZ> <zweitePositionX> <zweitePositionY> <zweitePositionZ> [optionalBlockFilter]\n",
+  "blockcounter.total": "Gesamt: ",
+  "blockcounter.numberOfBlocks": "Anzahl der Blöcke: ",
+  "blockcounter.command.precommand": "blockzähler",
+  "blockcounter.command.countblocks": "blockszählen",
+  "blockcounter.command.setposition": "positionfestlegen",
+  "blockcounter.command.help": "hilfe",
+  "blockcounter.command.arguments.firstposition": "erste_position",
+  "blockcounter.command.arguments.secondposition": "zweite_position",
+  "blockcounter.command.arguments.blockname": "blockname",
+  "blockcounter.command.arguments.commandname": "befehlsname",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'blockszählen <erste_position> <zweite_position> [blockname]' :\nzählt die Blöcke von der ersten Position zur zweiten Position.\nOptional werden nur die Blöcke mit dem angegebenen Blocknamenfilter beibehalten.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'positionfestlegen [blockname]' :\nbeim ersten Gebrauch wird die erste Position festgelegt;\nbeim zweiten Gebrauch wird die zweite Position festgelegt und\nes werden die Blöcke zwischen den beiden Positionen gezählt.\nOptional werden nur die Blöcke mit dem angegebenen Blocknamenfilter beibehalten.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <blockszählen|positionfestlegen>' :\nzählt die Blöcke von einer Position zur anderen.\nSie können auch ein Buch und eine Feder verwenden:\nhalten Sie es in der Hand, während Sie die Befehle ausführen, damit die Ausgabe im Buch steht.\nSie können auch mit einem Buch und einer Feder auf einen Block links klicken, um den Befehl positionfestlegen für einen bestimmten Block zu verwenden.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'blockszählen <erste_position> <zweite_position> [blockname]' : zählt die Blöcke von der ersten Position zur zweiten Position. Optional werden nur die Blöcke mit dem angegebenen Blocknamenfilter beibehalten.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'positionfestlegen [blockname]' : beim ersten Gebrauch wird die erste Position festgelegt; beim zweiten Gebrauch wird die zweite Position festgelegt und es werden die Blöcke zwischen den beiden Positionen gezählt. Optional werden nur die Blöcke mit dem angegebenen Blocknamenfilter beibehalten.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <blockszählen|positionfestlegen>' : zählt die Blöcke von einer Position zur anderen. Sie können auch ein Buch und eine Feder verwenden: halten Sie es in der Hand, während Sie die Befehle ausführen, damit die Ausgabe im Buch steht. Sie können auch mit einem Buch und einer Feder auf einen Block links klicken, um den Befehl positionfestlegen für einen bestimmten Block zu verwenden.||"
+}

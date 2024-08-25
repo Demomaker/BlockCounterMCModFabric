@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "ブロックカウンター",
+  "blockcounter.description": "これはブロックをカウントするためのモッドです。\n\nカウントするためにこのコマンドを使用します:\n/blockcounter ブロックを数える <最初の位置X> <最初の位置Y> <最初の位置Z> <二番目の位置X> <二番目の位置Y> <二番目の位置Z> [オプションのブロックフィルター]\n",
+  "blockcounter.total": "合計: ",
+  "blockcounter.numberOfBlocks": "ブロックの数: ",
+  "blockcounter.command.precommand": "ブロックカウンター",
+  "blockcounter.command.countblocks": "ブロックを数える",
+  "blockcounter.command.setposition": "位置を設定する",
+  "blockcounter.command.help": "ヘルプ",
+  "blockcounter.command.arguments.firstposition": "最初の位置",
+  "blockcounter.command.arguments.secondposition": "二番目の位置",
+  "blockcounter.command.arguments.blockname": "ブロック名",
+  "blockcounter.command.arguments.commandname": "コマンド名",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'ブロックを数える <最初の位置> <二番目の位置> [ブロック名]' :\n最初の位置から二番目の位置までのブロックを数える。\nオプションで、指定されたブロック名フィルターを持つブロックのみを保持する。\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'位置を設定する [ブロック名]' :\n最初に使用すると、最初の位置を設定する;\n次に使用すると、二番目の位置を設定し、二つの位置の間のブロックを数える。\nオプションで、指定されたブロック名フィルターを持つブロックのみを保持する。\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <ブロックを数える|位置を設定する>' :\n一つの位置から別の位置までのブロックを数える。\n書籍と羽根ペンを使うこともできます:\nコマンドを実行中にそれを持っていると、結果が書籍に表示されます。\nまた、特定のブロックに対して位置を設定するコマンドを使用するために、書籍と羽根ペンを使ってブロックを左クリックすることもできます。\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'ブロックを数える <最初の位置> <二番目の位置> [ブロック名]' : 最初の位置から二番目の位置までのブロックを数える。 オプションで、指定されたブロック名フィルターを持つブロックのみを保持する。||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| '位置を設定する [ブロック名]' : 最初に使用すると、最初の位置を設定する; 次に使用すると、二番目の位置を設定し、二つの位置の間のブロックを数える。 オプションで、指定されたブロック名フィルターを持つブロックのみを保持する。||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <ブロックを数える|位置を設定する>' : 一つの位置から別の位置までのブロックを数える。 書籍と羽根ペンを使うこともできます: コマンドを実行中にそれを持っていると、結果が書籍に表示されます。 また、特定のブロックに対して位置を設定するコマンドを使用するために、書籍と羽根ペンを使ってブロックを左クリックすることもできます。||"
+}

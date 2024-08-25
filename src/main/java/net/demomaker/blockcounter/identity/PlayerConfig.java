@@ -1,14 +1,14 @@
-package net.demomaker.blockcounter.config;
+package net.demomaker.blockcounter.identity;
 
-import com.mojang.authlib.GameProfile;
 import java.util.UUID;
+import net.demomaker.blockcounter.adapter.player.GameProfile;
 import net.demomaker.blockcounter.algorithm.Algorithm;
 import net.demomaker.blockcounter.command.config.CommandConfigs;
 
 public class PlayerConfig implements CommandExecutionConfig {
-  private GameProfile gameProfile;
-  private Algorithm algorithm;
-  private CommandConfigs commandConfigs;
+  private final GameProfile gameProfile;
+  private final Algorithm algorithm;
+  private final CommandConfigs commandConfigs;
   public PlayerConfig(GameProfile gameProfile, Algorithm algorithm, CommandConfigs commandConfigs) {
     this.gameProfile = gameProfile;
     this.algorithm = algorithm;
