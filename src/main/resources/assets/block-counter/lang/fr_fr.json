@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "Compteur de Blocs",
+  "blockcounter.description": "Ceci est un mod pour compter des blocs.",
+  "blockcounter.total": "Total : ",
+  "blockcounter.numberOfBlocks": "Quantités de blocs : ",
+  "blockcounter.command.precommand": "compteurdebloc",
+  "blockcounter.command.countblocks": "compteblocs",
+  "blockcounter.command.setposition": "definirposition",
+  "blockcounter.command.help": "aide",
+  "blockcounter.command.arguments.firstposition": "premiere_position",
+  "blockcounter.command.arguments.secondposition": "deuxieme_position",
+  "blockcounter.command.arguments.blockname": "nom_de_bloc",
+  "blockcounter.command.arguments.commandname": "nom_de_commande",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'compteblocs <premiere_position> <deuxieme_position> [nom_de_bloc]' :\ncompte les blocs de la premiere position a la deuxieme position.\nOptionnellement, garde seulement les blocs correspondant au nom_de_bloc.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'definirposition [nom_de_bloc]' :\nsur premier usage, defini la premiere position;\nsur deuxieme usage, defini la deuxieme position et\ncompte les blocs entre les deux.\nOptionnellement, garde seulement les blocs correspondant au nom_de_bloc.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <compteblocs|definirposition>' :\ncompter les blocs d'une position a une autre.\nVous pouvez utiliser un livre a ecrire :\nTenez un pendant l'execution pour avoir la sortie dans le livre.\nVous pouvez egalement faire clic gauche sur un bloc avec le livre pour executer un definirposition sur le bloc.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'compteblocs <premiere_position> <deuxieme_position> [nom_de_bloc]' : compte les blocs de la premiere position a la deuxieme position. Optionnellement, garde seulement les blocs correspondant au nom_de_bloc.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'definirposition [nom_de_bloc]' : sur premier usage, defini la premiere position; sur deuxieme usage, defini la deuxieme position et compte les blocs entre les deux. Optionnellement, garde seulement les blocs correspondant au nom_de_bloc.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <compteblocs|definirposition>' : compter les blocs d'une position a une autre. Vous pouvez utiliser un livre a ecrire : Tenez un pendant l'execution pour avoir la sortie dans le livre. Vous pouvez egalement faire clic gauche sur un bloc avec le livre pour executer un definirposition sur le bloc.||"
+}

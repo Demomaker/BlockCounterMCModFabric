@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "Contador de Bloques",
+  "blockcounter.description": "Este es un mod para contar bloques.\n\nUsa este comando para contar:\n/blockcounter contarbloques <primeraPosiciónX> <primeraPosiciónY> <primeraPosiciónZ> <segundaPosiciónX> <segundaPosiciónY> <segundaPosiciónZ> [filtroDeBloqueOpcional]\n",
+  "blockcounter.total": "Total: ",
+  "blockcounter.numberOfBlocks": "Número de Bloques: ",
+  "blockcounter.command.precommand": "contadorbloques",
+  "blockcounter.command.countblocks": "contarbloques",
+  "blockcounter.command.setposition": "establecerposición",
+  "blockcounter.command.help": "ayuda",
+  "blockcounter.command.arguments.firstposition": "primera_posición",
+  "blockcounter.command.arguments.secondposition": "segunda_posición",
+  "blockcounter.command.arguments.blockname": "nombre_de_bloque",
+  "blockcounter.command.arguments.commandname": "nombre_de_comando",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'contarbloques <primera_posición> <segunda_posición> [nombre_de_bloque]' :\ncuenta los bloques de la primera posición a la segunda posición.\nOpcionalmente, solo mantiene los bloques con el filtro de nombre_de_bloque especificado.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'establecerposición [nombre_de_bloque]' :\nen el primer uso, establece la primera posición;\nen el segundo uso, establece la segunda posición y cuenta los bloques entre las dos posiciones.\nOpcionalmente, solo mantiene los bloques con el filtro de nombre_de_bloque especificado.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <contarbloques|establecerposición>' :\ncuenta los bloques de una posición a otra.\nTambién puedes usar un libro y una pluma:\nsostenlo en la mano mientras ejecutas los comandos para que la salida esté en el libro.\nTambién puedes hacer clic izquierdo con un libro y una pluma para usar el comando establecerposición en un bloque particular.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'contarbloques <primera_posición> <segunda_posición> [nombre_de_bloque]' : cuenta los bloques de la primera posición a la segunda posición. Opcionalmente, solo mantiene los bloques con el filtro de nombre_de_bloque especificado.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'establecerposición [nombre_de_bloque]' : en el primer uso, establece la primera posición; en el segundo uso, establece la segunda posición y cuenta los bloques entre las dos posiciones. Opcionalmente, solo mantiene los bloques con el filtro de nombre_de_bloque especificado.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <contarbloques|establecerposición>' : cuenta los bloques de una posición a otra. También puedes usar un libro y una pluma: sostenlo en la mano mientras ejecutas los comandos para que la salida esté en el libro. También puedes hacer clic izquierdo con un libro y una pluma para usar el comando establecerposición en un bloque particular.||"
+}

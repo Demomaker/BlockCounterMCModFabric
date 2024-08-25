@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "Kihesabu Vizuizi",
+  "blockcounter.description": "Hii ni mod ya kuhesabu vizuizi.\n\nTumia amri hii kuhesabu:\n/blockcounter hesabuvizuizi <nafasiyaKwanzaX> <nafasiyaKwanzaY> <nafasiyaKwanzaZ> <nafasiyaPiliX> <nafasiyaPiliY> <nafasiyaPiliZ> [kichujivizuizi cha hiari]\n",
+  "blockcounter.total": "Jumla: ",
+  "blockcounter.numberOfBlocks": "Idadi ya Vizuizi: ",
+  "blockcounter.command.precommand": "kihesabuvizuizi",
+  "blockcounter.command.countblocks": "hesabuvizuizi",
+  "blockcounter.command.setposition": "weka nafasi",
+  "blockcounter.command.help": "msaada",
+  "blockcounter.command.arguments.firstposition": "nafasi_ya_kwanza",
+  "blockcounter.command.arguments.secondposition": "nafasi_ya_pili",
+  "blockcounter.command.arguments.blockname": "jina_la_kizuizi",
+  "blockcounter.command.arguments.commandname": "jina_la_amri",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'hesabuvizuizi <nafasi_ya_kwanza> <nafasi_ya_pili> [jina_la_kizuizi]' :\nHesabu vizuizi kutoka nafasi ya kwanza hadi ya pili.\nHiari, huweka tu vizuizi vilivyo na kichujivizuizi kilichotajwa.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'weka nafasi [jina_la_kizuizi]' :\nKatika matumizi ya kwanza, weka nafasi ya kwanza;\nKatika matumizi ya pili, weka nafasi ya pili na hesabu vizuizi kati ya hizo nafasi mbili.\nHiari, huweka tu vizuizi vilivyo na kichujivizuizi kilichotajwa.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <hesabuvizuizi|weka nafasi>' :\nHesabu vizuizi kutoka nafasi moja hadi nyingine.\nUnaweza pia kutumia kitabu na kalamu:\nShikilia mkononi wakati wa kutekeleza amri ili matokeo yawe kwenye kitabu.\nUnaweza pia kubofya kulia na kitabu na kalamu kwenye kizuizi ili kutumia amri ya weka nafasi kwenye kizuizi maalum.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'hesabuvizuizi <nafasi_ya_kwanza> <nafasi_ya_pili> [jina_la_kizuizi]' : Hesabu vizuizi kutoka nafasi ya kwanza hadi ya pili. Hiari, huweka tu vizuizi vilivyo na kichujivizuizi kilichotajwa.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'weka nafasi [jina_la_kizuizi]' : Katika matumizi ya kwanza, weka nafasi ya kwanza; Katika matumizi ya pili, weka nafasi ya pili na hesabu vizuizi kati ya hizo nafasi mbili. Hiari, huweka tu vizuizi vilivyo na kichujivizuizi kilichotajwa.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <hesabuvizuizi|weka nafasi>' : Hesabu vizuizi kutoka nafasi moja hadi nyingine. Unaweza pia kutumia kitabu na kalamu: Shikilia mkononi wakati wa kutekeleza amri ili matokeo yawe kwenye kitabu. Unaweza pia kubofya kulia na kitabu na kalamu kwenye kizuizi ili kutumia amri ya weka nafasi kwenye kizuizi maalum.||"
+}

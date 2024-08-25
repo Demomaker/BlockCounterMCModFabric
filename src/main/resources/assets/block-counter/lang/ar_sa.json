@@ -1,0 +1,20 @@
+{
+  "blockcounter.title": "عداد الكتل",
+  "blockcounter.description": "هذا مود لعد الكتل.\n\nاستخدم هذا الأمر للعد:\n/blockcounter عدالكتل <الموقعالأولX> <الموقعالأولY> <الموقعالأولZ> <الموقعالثانيX> <الموقعالثانيY> <الموقعالثانيZ> [مرشحالكتلاختياري]\n",
+  "blockcounter.total": "الإجمالي: ",
+  "blockcounter.numberOfBlocks": "عدد الكتل: ",
+  "blockcounter.command.precommand": "عدادالكتل",
+  "blockcounter.command.countblocks": "عدالكتل",
+  "blockcounter.command.setposition": "ضبطالموقع",
+  "blockcounter.command.help": "مساعدة",
+  "blockcounter.command.arguments.firstposition": "الموقع_الأول",
+  "blockcounter.command.arguments.secondposition": "الموقع_الثاني",
+  "blockcounter.command.arguments.blockname": "اسم_الكتلة",
+  "blockcounter.command.arguments.commandname": "اسم_الأمر",
+  "blockcounter.commandhelpmessage.countblocks": "===[BlockCounter]===\n'عدالكتل <الموقع_الأول> <الموقع_الثاني> [اسم_الكتلة]' :\nيعد الكتل من الموقع الأول إلى الموقع الثاني.\nاختياريًا، يحتفظ فقط بالكتل مع مرشح اسم_الكتلة المحدد.\n==================\n",
+  "blockcounter.commandhelpmessage.setposition": "===[BlockCounter]===\n'ضبطالموقع [اسم_الكتلة]' :\nفي الاستخدام الأول، يتم ضبط الموقع الأول؛\nفي الاستخدام الثاني، يتم ضبط الموقع الثاني ويتم عد الكتل بين الموقعين.\nاختياريًا، يحتفظ فقط بالكتل مع مرشح اسم_الكتلة المحدد.\n==================\n",
+  "blockcounter.commandhelpmessage.common": "===[BlockCounter]===\n'blockcounter <عدالكتل|ضبطالموقع>' :\nيعد الكتل من موقع إلى آخر.\nيمكنك أيضًا استخدام كتاب وريشة:\nاحتفظ بها في اليد أثناء تنفيذ الأوامر لتظهر النتيجة في الكتاب.\nيمكنك أيضًا النقر بالزر الأيسر باستخدام كتاب وريشة لاستخدام أمر ضبطالموقع على كتلة معينة.\n==================\n",
+  "blockcounter.commandhelpmessageoneliner.countblocks": "[BlockCounter]|| 'عدالكتل <الموقع_الأول> <الموقع_الثاني> [اسم_الكتلة]' : يعد الكتل من الموقع الأول إلى الموقع الثاني. اختياريًا، يحتفظ فقط بالكتل مع مرشح اسم_الكتلة المحدد.||",
+  "blockcounter.commandhelpmessageoneliner.setposition": "[BlockCounter]|| 'ضبطالموقع [اسم_الكتلة]' : في الاستخدام الأول، يتم ضبط الموقع الأول؛ في الاستخدام الثاني، يتم ضبط الموقع الثاني ويتم عد الكتل بين الموقعين. اختياريًا، يحتفظ فقط بالكتل مع مرشح اسم_الكتلة المحدد.||",
+  "blockcounter.commandhelpmessageoneliner.common": "[BlockCounter]|| 'blockcounter <عدالكتل|ضبطالموقع>' : يعد الكتل من موقع إلى آخر. يمكنك أيضًا استخدام كتاب وريشة: احتفظ بها في اليد أثناء تنفيذ الأوامر لتظهر النتيجة في الكتاب. يمكنك أيضًا النقر بالزر الأيسر باستخدام كتاب وريشة لاستخدام أمر ضبطالموقع على كتلة معينة.||"
+}
