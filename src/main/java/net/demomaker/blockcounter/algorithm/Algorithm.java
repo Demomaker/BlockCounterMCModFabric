@@ -14,8 +14,7 @@ import net.demomaker.blockcounter.blockentity.BlockEntry;
 import net.demomaker.blockcounter.blockentity.DoubledBlockItemNames;
 import net.demomaker.blockcounter.blockentity.ItemName;
 import net.demomaker.blockcounter.command.config.CommandConfig;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
+import net.demomaker.blockcounter.util.FluidUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.Fluids;
@@ -121,10 +120,11 @@ public class Algorithm {
         ItemName itemName = new ItemName(Language.getInstance().get(currentBlock.block().getTranslationKey()));
         String airName = Language.getInstance().get(Blocks.AIR.getTranslationKey());
         if(itemName.getString().equals(airName)) {
-            itemName = new ItemName(FluidVariantAttributes.getName(FluidVariant.of(serverWorld.getBlockState(blockPos).getFluidState().getFluid())).getString());
+            String fluidName = FluidUtils.getFluidNameAsString(serverWorld.getBlockState(blockPos).getFluidState().getFluid());
+            itemName = new ItemName(fluidName);
         }
 
-        if(itemName.getString().equals(FluidVariantAttributes.getName(FluidVariant.of(Fluids.EMPTY)).getString())) {
+        if(itemName.getString().equals(FluidUtils.getFluidNameAsString(Fluids.EMPTY))) {
             itemName = new ItemName(airName);
         }
         return itemName;
