@@ -55,13 +55,13 @@ public class ModCommands {
     }
 
     public static void disconnect(ServerPlayNetworkHandler handler, MinecraftServer ignoredServer) {
-        PlayerConfig wantedPlayerConfig = new PlayerConfig(new GameProfile(handler.getPlayer().getGameProfile()), null, null);
+        PlayerConfig wantedPlayerConfig = new PlayerConfig(new GameProfile(handler.player.getGameProfile()), null, null);
         ModObjects.commandExecutionConfigs.getConfig(wantedPlayerConfig).getAlgorithm().stop();
         ModObjects.commandExecutionConfigs.removeConfig(wantedPlayerConfig);
     }
 
     public static void join(ServerPlayNetworkHandler serverPlayNetworkHandler, PacketSender ignoredPacketSender, MinecraftServer ignoredMinecraftServer) {
-        PlayerConfig newPlayerConfig = new PlayerConfig(new GameProfile(serverPlayNetworkHandler.getPlayer().getGameProfile()), new Algorithm(), new CommandConfigs(new SetPositionCommandConfig(null, null, null, null, null)));
+        PlayerConfig newPlayerConfig = new PlayerConfig(new GameProfile(serverPlayNetworkHandler.player.getGameProfile()), new Algorithm(), new CommandConfigs(new SetPositionCommandConfig(null, null, null, null, null)));
         ModObjects.commandExecutionConfigs.addConfig(newPlayerConfig);
     }
 
