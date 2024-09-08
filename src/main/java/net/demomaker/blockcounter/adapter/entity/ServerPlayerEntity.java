@@ -33,18 +33,31 @@ public class ServerPlayerEntity extends Entity {
   }
 
   public Vec3d getPos() {
+    if(isNull()) {
+      return Vec3d.ZERO;
+    }
+
     return new Vec3d(getServerPlayerEntity().getPos());
   }
 
   public GameProfile getGameProfile() {
+    if(isNull()) {
+      return new GameProfile(UUID.randomUUID(), "");
+    }
     return this.getServerPlayerEntity().getGameProfile();
   }
 
   public ItemStack getMainHandStack() {
+    if(isNull()) {
+      return new ItemStack(net.minecraft.item.ItemStack.EMPTY);
+    }
     return new ItemStack(this.getServerPlayerEntity().getMainHandStack());
   }
 
   public ItemStack getOffHandStack() {
+    if(isNull()) {
+      return new ItemStack(net.minecraft.item.ItemStack.EMPTY);
+    }
     return new ItemStack(this.getServerPlayerEntity().getOffHandStack());
   }
 
