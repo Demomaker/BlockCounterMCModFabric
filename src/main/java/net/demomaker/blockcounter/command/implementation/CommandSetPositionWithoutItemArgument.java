@@ -11,7 +11,12 @@ import net.demomaker.blockcounter.adapter.block.BlockPos;
 
 public class CommandSetPositionWithoutItemArgument extends CommandSetPosition {
   public static int executeFrom(ClientPlayerEntity player, BlockPos blockPos) {
-    return executeFrom(ServerPlayerEntity.getFrom(ModObjects.minecraftServer, player.getUuid()).getServerPlayerEntity(), blockPos);
+    ServerPlayerEntity serverPlayerEntity = ServerPlayerEntity.getFrom(ModObjects.minecraftServer, player.getUuid());
+    if(serverPlayerEntity.isNull()) {
+      return -1;
+    }
+
+    return executeFrom(serverPlayerEntity.getServerPlayerEntity(), blockPos);
   }
 
   public static int executeFrom(net.minecraft.server.network.ServerPlayerEntity player, BlockPos blockPos) {
