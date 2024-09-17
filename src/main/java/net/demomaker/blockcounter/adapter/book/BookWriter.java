@@ -1,13 +1,16 @@
 package net.demomaker.blockcounter.adapter.book;
 
-import java.util.ArrayList;
-import java.util.List;
 import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
 import net.demomaker.blockcounter.adapter.item.ItemStack;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
+import net.demomaker.blockcounter.payload.ClipboardPayload;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.WritableBookContentComponent;
 import net.minecraft.text.RawFilteredPair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookWriter {
   public static final int MAX_PAGE_LENGTH = 200;
@@ -83,6 +86,8 @@ public class BookWriter {
       if(offHandItemStack.getItem().isWritableBook()) {
         Write(offHandItemStack, message);
       }
+
+      ServerPlayNetworking.send(player.getServerPlayerEntity(), new ClipboardPayload(message));
     }
   }
 }
