@@ -18,6 +18,7 @@ import net.demomaker.blockcounter.identity.CommandExecutionConfigResolver;
 import net.demomaker.blockcounter.identity.PlayerConfig;
 import net.demomaker.blockcounter.payload.ClipboardPayload;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import static net.demomaker.blockcounter.adapter.book.BookWriter.detectPlayersWithBookAndQuillAndWrite;
@@ -59,7 +60,7 @@ public class BasicCommand extends ServerCommand {
         wroteInABook = BookWriter.Write(commandConfig.writableBook, fullPageMessage);
         ServerPlayerEntity player = new ServerPlayerEntity(context.getSource().getPlayer());
         if(!player.isNull()) {
-          ServerPlayNetworking.send(player.getServerPlayerEntity(), new ClipboardPayload(fullPageMessage));
+          ServerPlayNetworking.send(player.getServerPlayerEntity(), ClipboardPayload.CLIPBOARD_PAYLOAD_ID, PacketByteBufs.create().writeString(fullPageMessage));
         }
       }
       if(currentCommandExecutionConfig instanceof CommandBlockConfig) {

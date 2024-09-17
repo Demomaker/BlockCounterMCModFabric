@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.MinecraftServer;
@@ -26,10 +25,9 @@ public class BlockCounter implements ModInitializer {
         AttackBlockCallback.EVENT.register(ModCommands::blockLeftClick);
         ServerLifecycleEvents.SERVER_STARTED.register(BlockCounter::onServerStart);
         ClientLifecycleEvents.CLIENT_STARTED.register(BlockCounter::onClientStart);
-        PayloadTypeRegistry.playS2C().register(ClipboardPayload.ID, ClipboardPayload.CODEC);
-        ClientPlayNetworking.registerGlobalReceiver(ClipboardPayload.ID, (payload, context) -> {
-            MinecraftClient client = ModObjects.minecraftClient;
-            client.keyboard.setClipboard(payload.clipboardText());
+        ClientPlayNetworking.registerGlobalReceiver(ClipboardPayload.CLIPBOARD_PAYLOAD_ID, (client, handler, buf, responseSender) -> {
+            MinecraftClient localClient = ModObjects.minecraftClient;
+            localClient.keyboard.setClipboard(buf.readString());
         });
     }
 
