@@ -1,24 +1,27 @@
 package net.demomaker.blockcounter.command.implementation;
 
-import static net.demomaker.blockcounter.adapter.book.BookWriter.detectPlayersWithBookAndQuillAndWrite;
-
+import net.demomaker.blockcounter.adapter.book.BookWriter;
 import net.demomaker.blockcounter.adapter.entity.CommandBlockBlockEntity;
 import net.demomaker.blockcounter.adapter.entity.CommandBlockMinecartEntity;
+import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
+import net.demomaker.blockcounter.adapter.math.Vec3d;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommand;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandContext;
-import net.demomaker.blockcounter.adapter.entity.ServerPlayerEntity;
 import net.demomaker.blockcounter.adapter.world.ServerWorld;
-import net.demomaker.blockcounter.adapter.math.Vec3d;
 import net.demomaker.blockcounter.blockentity.BlockEntries;
 import net.demomaker.blockcounter.command.config.CommandConfig;
 import net.demomaker.blockcounter.command.config.SourceType;
+import net.demomaker.blockcounter.entity.EntityResolver;
 import net.demomaker.blockcounter.identity.CommandBlockConfig;
 import net.demomaker.blockcounter.identity.CommandExecutionConfig;
 import net.demomaker.blockcounter.identity.CommandExecutionConfigResolver;
 import net.demomaker.blockcounter.identity.PlayerConfig;
-import net.demomaker.blockcounter.entity.EntityResolver;
-import net.demomaker.blockcounter.adapter.book.BookWriter;
+import net.demomaker.blockcounter.payload.ClipboardPayload;
 import net.demomaker.blockcounter.util.ResultMessageCreator;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+import static net.demomaker.blockcounter.adapter.book.BookWriter.detectPlayersWithBookAndQuillAndWrite;
 
 public class BasicCommand extends ServerCommand {
   public static final String FIRST_POSITION_ARGUMENT_NAME = "first_position";
@@ -55,6 +58,10 @@ public class BasicCommand extends ServerCommand {
       boolean wroteInABook = false;
       if(currentCommandExecutionConfig instanceof PlayerConfig) {
         wroteInABook = BookWriter.Write(commandConfig.writableBook, fullPageMessage);
+        ServerPlayerEntity player = new ServerPlayerEntity(context.getSource().getPlayer());
+        if(!player.isNull()) {
+          ServerPlayNetworking.send(player.getServerPlayerEntity(), ClipboardPayload.CLIPBOARD_PAYLOAD_ID, PacketByteBufs.create().writeString(fullPageMessage));
+        }
       }
       if(currentCommandExecutionConfig instanceof CommandBlockConfig) {
         detectPlayersWithBookAndQuillAndWrite(context, fullPageMessage);
