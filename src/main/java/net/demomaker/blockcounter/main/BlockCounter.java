@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -36,18 +35,17 @@ public class BlockCounter implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register(ModCommands::join);
         AttackBlockCallback.EVENT.register(ModCommands::blockLeftClick);
         ServerLifecycleEvents.SERVER_STARTED.register(BlockCounter::onServerStart);
-        PayloadTypeRegistry.playS2C().register(ClipboardPayload.ID, ClipboardPayload.CODEC);
     }
 
     @Environment(EnvType.CLIENT)
     public void initializeClient() {
         ClientLifecycleEvents.CLIENT_STARTED.register(BlockCounter::onClientStart);
-        ClientPlayNetworking.registerGlobalReceiver(ClipboardPayload.ID, (payload, context) -> {
-            MinecraftClient client = ModObjects.minecraftClient;
-            if(client == null) {
+        ClientPlayNetworking.registerGlobalReceiver(ClipboardPayload.CLIPBOARD_PAYLOAD_ID, (client, handler, buf, responseSender) -> {
+            MinecraftClient localClient = ModObjects.minecraftClient;
+            if(localClient == null) {
                 return;
             }
-            client.keyboard.setClipboard(payload.clipboardText());
+            localClient.keyboard.setClipboard(buf.readString());
         });
     }
 
