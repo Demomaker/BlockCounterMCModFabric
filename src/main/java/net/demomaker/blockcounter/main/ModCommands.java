@@ -71,7 +71,7 @@ public class ModCommands {
     public static ActionResult blockLeftClick(PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction ignoredDirection) {
         long currentTime = System.currentTimeMillis();
 
-        if (world.isClient && hand == Hand.MAIN_HAND && currentTime - lastExecutionTime >= COOLDOWN_PERIOD && !blockAlreadyAttacked) {
+        if (world.isClient() && hand == Hand.MAIN_HAND && currentTime - lastExecutionTime >= COOLDOWN_PERIOD && !blockAlreadyAttacked) {
             blockAlreadyAttacked = true;
             lastExecutionTime = currentTime;
 

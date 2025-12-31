@@ -37,7 +37,7 @@ public class ServerPlayerEntity extends Entity {
       return Vec3d.ZERO;
     }
 
-    return new Vec3d(getServerPlayerEntity().getPos());
+    return new Vec3d(getServerPlayerEntity().getEntityPos());
   }
 
   public GameProfile getGameProfile() {

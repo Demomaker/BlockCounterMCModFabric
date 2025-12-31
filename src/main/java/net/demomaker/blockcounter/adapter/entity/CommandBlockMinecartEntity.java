@@ -25,7 +25,7 @@ public class CommandBlockMinecartEntity extends Entity {
   }
 
   public Vec3d getPos() {
-    return new Vec3d(this.getCommandBlockMinecartEntity().getPos());
+    return new Vec3d(this.getCommandBlockMinecartEntity().getEntityPos());
   }
 
   public boolean isNull() {
