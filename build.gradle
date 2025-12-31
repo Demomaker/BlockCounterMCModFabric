@@ -3,8 +3,13 @@ plugins {
 	id 'maven-publish'
 }
 
+mod_filename = project.mod_filename
 version = project.mod_version + '-for-minecraft-' + project.minecraft_version
 group = project.maven_group
+
+base {
+	archivesName = mod_filename
+}
 
 dependencies {
 	// To change the versions see the gradle.properties file
@@ -52,27 +57,6 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// Select the repositories you want to publish to
-	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
-	repositories {
-		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+		rename { "${mod_filename}"}
 	}
 }
