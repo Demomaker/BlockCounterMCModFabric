@@ -1,7 +1,7 @@
 # Block Counter (Fabric)
 
 [![Platform](https://img.shields.io/badge/Platform-Fabric-lightgrey.svg)](https://fabricmc.net/)
-[![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.1-blue.svg)](https://www.minecraft.net/)
+[![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.11-blue.svg)](https://www.minecraft.net/)
 
 **Block Counter** is a utility mod for Minecraft (Fabric) designed to help builders and technical players. It allows you to select a region and get a precise breakdown of every block type within those boundaries.
 
