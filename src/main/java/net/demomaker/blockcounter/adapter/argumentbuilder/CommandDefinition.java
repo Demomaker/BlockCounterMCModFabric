@@ -14,8 +14,11 @@ import net.demomaker.blockcounter.adapter.servercommand.ServerCommand;
 import net.demomaker.blockcounter.adapter.servercommand.ServerCommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.ItemStackArgumentType;
+import net.minecraft.command.permission.Permission;
+import net.minecraft.command.permission.PermissionLevel;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.util.Identifier;
 
 public class CommandDefinition {
 
@@ -61,21 +64,21 @@ public class CommandDefinition {
 
   protected LiteralCommandNode<ServerCommandSource> toLiteralCommandNode(
       CommandDispatcher<ServerCommandSource> commandDispatcher) {
-    LiteralArgumentBuilder<ServerCommandSource> literalCommand = CommandManager.literal(name).requires(cs -> cs.hasPermissionLevel(0));
+    LiteralArgumentBuilder<ServerCommandSource> literalCommand = CommandManager.literal(name).requires(cs -> cs.getPermissions().hasPermission(new Permission.Level(PermissionLevel.ALL)));
     if(serverCommand != null) {
-      literalCommand.requires(cs -> cs.hasPermissionLevel(0)).executes(serverCommand.getCommand());
+      literalCommand.requires(cs -> cs.getPermissions().hasPermission(new Permission.Level(PermissionLevel.ALL))).executes(serverCommand.getCommand());
     }
 
     if(commandArguments.size() != 0) {
       ArgumentBuilder<ServerCommandSource, ?> argumentBuilder = argument(commandArguments.getLast().name, (ArgumentType<?>) commandArguments.getLast().type);
       if(commandArguments.getLast().serverCommand != null) {
-        argumentBuilder.requires(cs -> cs.hasPermissionLevel(0)).executes(commandArguments.getLast().serverCommand.getCommand());
+        argumentBuilder.requires(cs -> cs.getPermissions().hasPermission(new Permission.Level(PermissionLevel.ALL))).executes(commandArguments.getLast().serverCommand.getCommand());
       }
       for (int i = commandArguments.size() - 2; i >= 0; i--) {
         var commandArgument = commandArguments.get(i);
         ArgumentBuilder<ServerCommandSource, ?> subArgumentBuilder = argument(commandArgument.name, (ArgumentType<?>) commandArgument.type);
         if(commandArgument.serverCommand != null) {
-          subArgumentBuilder.requires(cs -> cs.hasPermissionLevel(0)).executes(commandArgument.serverCommand.getCommand());
+          subArgumentBuilder.requires(cs -> cs.getPermissions().hasPermission(new Permission.Level(PermissionLevel.ALL))).executes(commandArgument.serverCommand.getCommand());
         }
 
         subArgumentBuilder.then(argumentBuilder);
